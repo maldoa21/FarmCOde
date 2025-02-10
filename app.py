@@ -2,11 +2,6 @@ from flask import Flask, jsonify
 import time
 import sqlite3
 import atexit
-from gpiozero import LED
-from gpiozero.pins.native import NativeFactory  # Use NativeFactory to avoid LGPIO issues
-
-# Use NativeFactory instead of LGPIOFactory
-pin_factory = NativeFactory()
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -14,11 +9,32 @@ app = Flask(__name__)
 # SQLite Database File
 DB_FILE = "shutters_control.db"
 
-# GPIO Setup using gpiozero with NativeFactory
-SHUTTER_PINS = {
-    "shutter_1": LED(17, pin_factory=pin_factory),
-    "shutter_2": LED(27, pin_factory=pin_factory)
-}
+# Function to initialize the database
+def init_db():
+    with sqlite3.connect(DB_FILE) as conn:
+        c = conn.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS shutters (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT UNIQUE NOT NULL,
+                        status TEXT NOT NULL CHECK(status IN ('open', 'closed'))
+                    )''')
+        c.execute('''CREATE TABLE IF NOT EXISTS logs (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        event TEXT NOT NULL
+                    )''')
+        c.execute('''CREATE TABLE IF NOT EXISTS performance (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        test_type TEXT NOT NULL,
+                        measured_value REAL NOT NULL,
+                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )''')
+        # Insert default shutters if they don't exist
+        c.execute("INSERT OR IGNORE INTO shutters (name, status) VALUES ('shutter_1', 'closed'), ('shutter_2', 'closed')")
+        conn.commit()
+
+# Initialize the database
+init_db()
 
 # Function to log results to the database
 def save_results(test_type, value):
@@ -43,12 +59,6 @@ def update_shutter_status(shutter_name, new_status):
 
 # Function to toggle shutters and measure time
 def toggle_shutter(shutter_name):
-    if shutter_name not in SHUTTER_PINS:
-        return {"error": "Invalid shutter name"}
-
-    shutter = SHUTTER_PINS[shutter_name]
-
-    # Retrieve current status
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute("SELECT status FROM shutters WHERE name = ?", (shutter_name,))
@@ -61,9 +71,7 @@ def toggle_shutter(shutter_name):
     new_status = "open" if current_status == "closed" else "closed"
 
     start_time = time.perf_counter()
-    shutter.on()  # Activate shutter
-    time.sleep(1)  # Simulate shutter movement
-    shutter.off()  # Deactivate shutter
+    time.sleep(1)  # Simulating the time required to toggle a real shutter
     end_time = time.perf_counter()
 
     toggle_time = (end_time - start_time) * 1000  # Convert to milliseconds
@@ -104,12 +112,6 @@ def status():
         c.execute("SELECT name, status FROM shutters")
         shutters = [{"name": row[0], "status": row[1]} for row in c.fetchall()]
     return jsonify({"status": "online", "available_shutters": shutters})
-
-# Cleanup GPIO on exit
-def cleanup_gpio():
-    for shutter in SHUTTER_PINS.values():
-        shutter.close()  # Properly release GPIO pins
-atexit.register(cleanup_gpio)
 
 # Run Flask app
 if __name__ == "__main__":
