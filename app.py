@@ -1,9 +1,12 @@
 from flask import Flask, jsonify
-import RPi.GPIO as GPIO
-import sqlite3
 import time
-import json
+import sqlite3
 import atexit
+from gpiozero import LED
+from gpiozero.pins.lgpio import LGPIOFactory  # Use lgpio for Raspberry Pi 5
+
+# Use lgpio as the pin factory
+pin_factory = LGPIOFactory()
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -11,19 +14,11 @@ app = Flask(__name__)
 # SQLite Database File
 DB_FILE = "shutters_control.db"
 
-# GPIO Setup
+# GPIO Setup using gpiozero with lgpio
 SHUTTER_PINS = {
-    "shutter_1": 17,  # Adjust these GPIO pins based on your wiring
-    "shutter_2": 27
+    "shutter_1": LED(17, pin_factory=pin_factory),
+    "shutter_2": LED(27, pin_factory=pin_factory)
 }
-
-GPIO.setmode(GPIO.BCM)  # Use BCM GPIO numbering
-GPIO.setwarnings(False)
-
-# Set all shutter pins as output
-for pin in SHUTTER_PINS.values():
-    GPIO.setup(pin, GPIO.OUT)
-    GPIO.output(pin, GPIO.LOW)  # Ensure all shutters start in the OFF position
 
 # Function to log results to the database
 def save_results(test_type, value):
@@ -51,7 +46,7 @@ def toggle_shutter(shutter_name):
     if shutter_name not in SHUTTER_PINS:
         return {"error": "Invalid shutter name"}
 
-    pin = SHUTTER_PINS[shutter_name]
+    shutter = SHUTTER_PINS[shutter_name]
 
     # Retrieve current status
     with sqlite3.connect(DB_FILE) as conn:
@@ -66,9 +61,9 @@ def toggle_shutter(shutter_name):
     new_status = "open" if current_status == "closed" else "closed"
 
     start_time = time.perf_counter()
-    GPIO.output(pin, GPIO.HIGH)  # Activate shutter
+    shutter.on()  # Activate shutter
     time.sleep(1)  # Simulate shutter movement
-    GPIO.output(pin, GPIO.LOW)  # Deactivate shutter
+    shutter.off()  # Deactivate shutter
     end_time = time.perf_counter()
 
     toggle_time = (end_time - start_time) * 1000  # Convert to milliseconds
@@ -112,7 +107,8 @@ def status():
 
 # Cleanup GPIO on exit
 def cleanup_gpio():
-    GPIO.cleanup()
+    for shutter in SHUTTER_PINS.values():
+        shutter.close()  # Properly release GPIO pins
 atexit.register(cleanup_gpio)
 
 # Run Flask app
