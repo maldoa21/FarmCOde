@@ -1,60 +1,31 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from gpiozero import LED
-from time import sleep
+import time
 
-# Initialize Flask app
 app = Flask(__name__)
 
-# GPIO setup using gpiozero
-# Define the GPIO pins to be controlled
-PINS = {
-    17: LED(17),
-    18: LED(18),
-    22: LED(22),
-    23: LED(23)
-}
+# GPIO Pin Setup
+SHUTTER_PIN = 17  # GPIO Pin for the shutter (adjust as needed)
+shutter = LED(SHUTTER_PIN)
 
-# Home route
-@app.route("/")
-def home():
-    return jsonify({"message": "Raspberry Pi GPIO Control API is Running!"})
+@app.route('/toggle_shutter', methods=['GET'])
+def toggle_shutter():
+    """Toggles the shutter and measures the time taken for the action."""
+    start_time = time.time()  # Start timing
 
-# Route to toggle a GPIO pin
-@app.route("/toggle/<int:pin>", methods=["POST"])
-def toggle_pin(pin):
-    if pin not in PINS:
-        return jsonify({"error": f"Invalid GPIO pin {pin}"}), 400
+    # Toggle the shutter
+    shutter.on()
+    time.sleep(0.5)  # Simulated delay for the shutter movement
+    shutter.off()
 
-    pin_obj = PINS[pin]
-    pin_obj.toggle()  # Toggle the pin state
+    toggle_time = (time.time() - start_time) * 1000  # Convert to milliseconds
 
-    state = "HIGH" if pin_obj.is_lit else "LOW"
-    return jsonify({
-        "pin": pin,
-        "new_state": state
-    })
+    return jsonify({"status": "success", "toggle_time_ms": toggle_time})
 
-# Route to get the status of a GPIO pin
-@app.route("/status/<int:pin>", methods=["GET"])
-def pin_status(pin):
-    if pin not in PINS:
-        return jsonify({"error": f"Invalid GPIO pin {pin}"}), 400
+@app.route('/status', methods=['GET'])
+def status():
+    """Returns the server status and confirms it's running."""
+    return jsonify({"status": "running"})
 
-    pin_obj = PINS[pin]
-    state = "HIGH" if pin_obj.is_lit else "LOW"
-    return jsonify({
-        "pin": pin,
-        "state": state
-    })
-
-# Route to turn all pins OFF
-@app.route("/reset", methods=["POST"])
-def reset_pins():
-    for pin_obj in PINS.values():
-        pin_obj.off()
-
-    return jsonify({"message": "All GPIO pins have been turned OFF."})
-
-# Run the Flask app
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
