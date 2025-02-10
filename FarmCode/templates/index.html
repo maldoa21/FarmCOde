@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shutter Control System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Shutter Control System</h1>
+    <p><strong>Current Time:</strong> {{ current_time }}</p>
+    <p><strong>Current Temperature:</strong> {{ temperature }}</p>
+
+    <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+            <tr>
+                <th style="padding: 10px;">Shutter Name</th>
+                <th style="padding: 10px;">Status</th>
+                <th style="padding: 10px;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: center; padding: 10px;">Test Shutter</td>
+                <td style="text-align: center; padding: 10px;">{{ shutter_states["test_shutter"] }}</td>
+                <td style="text-align: center; padding: 10px;">
+                    <form action="/toggle/test_shutter" method="post">
+                        <button type="submit" style="padding: 5px 10px;">
+                            {% if shutter_states["test_shutter"] == 'open' %}
+                                Close Test Shutter
+                            {% else %}
+                                Open Test Shutter
+                            {% endif %}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center; padding: 10px;">Farm Shutter</td>
+                <td style="text-align: center; padding: 10px;">{{ shutter_states["farm_shutter"] }}</td>
+                <td style="text-align: center; padding: 10px;">
+                    <form action="/toggle/farm_shutter" method="post">
+                        <button type="submit" style="padding: 5px 10px;">
+                            {% if shutter_states["farm_shutter"] == 'open' %}
+                                Close Farm Shutter
+                            {% else %}
+                                Open Farm Shutter
+                            {% endif %}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
