@@ -1,80 +1,82 @@
 from flask import Flask, jsonify
+import RPi.GPIO as GPIO
 import time
-import requests
 import json
 
+# Initialize Flask app
 app = Flask(__name__)
 
-# Number of test attempts
-NUM_ATTEMPTS = 500
+# GPIO Setup
+SHUTTER_PINS = {
+    "shutter_1": 17,  # Adjust these GPIO pins based on your wiring
+    "shutter_2": 27
+}
 
-# Function to save results to a log file
+GPIO.setmode(GPIO.BCM)  # Use BCM GPIO numbering
+GPIO.setwarnings(False)
+
+# Set all shutter pins as output
+for pin in SHUTTER_PINS.values():
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, GPIO.LOW)  # Ensure all shutters start in the OFF position
+
+# Function to log results
 def save_results(filename, data):
     with open(filename, "a") as file:
         file.write(json.dumps(data) + "\n")
 
-# Simulated Shutter Toggle Test
-def test_shutter_toggle():
-    times = []
+# Function to toggle shutters and measure time
+def toggle_shutter(shutter_name):
+    if shutter_name not in SHUTTER_PINS:
+        return {"error": "Invalid shutter name"}
     
-    for _ in range(NUM_ATTEMPTS):
-        start_time = time.perf_counter()
-        toggle_state = not True  # Simulating a toggle
-        end_time = time.perf_counter()
-        
-        times.append((end_time - start_time) * 1000)  # Convert to ms
+    pin = SHUTTER_PINS[shutter_name]
     
-    results = {
-        "average_toggle_time_ms": sum(times) / NUM_ATTEMPTS,
-        "min_toggle_time_ms": min(times),
-        "max_toggle_time_ms": max(times)
-    }
-    save_results("shutter_results.json", results)
-    return results
+    start_time = time.perf_counter()
+    GPIO.output(pin, GPIO.HIGH)  # Activate shutter
+    time.sleep(1)  # Simulate shutter movement
+    GPIO.output(pin, GPIO.LOW)  # Deactivate shutter
+    end_time = time.perf_counter()
+    
+    toggle_time = (end_time - start_time) * 1000  # Convert to milliseconds
+    result = {"shutter": shutter_name, "toggle_time_ms": round(toggle_time, 2)}
+    
+    save_results("shutter_results.json", result)
+    return result
 
-# Web Response Time Test
+# Web response time testing
 def test_web_response():
-    times = []
-    successes = 0
-
-    for _ in range(NUM_ATTEMPTS):
-        start_time = time.perf_counter()
-        
-        try:
-            response = requests.get("http://127.0.0.1:5000/ping")  # Ping local server
-            success = response.status_code == 200
-            if success:
-                successes += 1
-        except requests.exceptions.RequestException:
-            success = False
-        
-        end_time = time.perf_counter()
-        times.append((end_time - start_time) * 1000)  # Convert to ms
+    start_time = time.perf_counter()
+    end_time = time.perf_counter()
+    response_time = (end_time - start_time) * 1000  # Convert to milliseconds
     
-    results = {
-        "success_rate": (successes / NUM_ATTEMPTS) * 100,
-        "average_response_time_ms": sum(times) / NUM_ATTEMPTS,
-        "min_response_time_ms": min(times),
-        "max_response_time_ms": max(times)
-    }
-    save_results("web_results.json", results)
-    return results
+    result = {"response_time_ms": round(response_time, 2)}
+    save_results("web_results.json", result)
+    return result
 
+# Flask Routes
 @app.route("/")
 def home():
-    return "Raspberry Pi Web Test Server is Running", 200
+    return "Shutter Control System Running", 200
 
-@app.route("/test/shutter")
-def shutter_test():
-    return jsonify(test_shutter_toggle())
+@app.route("/toggle/<shutter_name>")
+def toggle(shutter_name):
+    return jsonify(toggle_shutter(shutter_name))
 
 @app.route("/test/web")
 def web_test():
     return jsonify(test_web_response())
 
-@app.route("/ping")
-def ping():
-    return jsonify({"status": "ok"})  # Used to test web response time
+@app.route("/status")
+def status():
+    return jsonify({"status": "online", "available_shutters": list(SHUTTER_PINS.keys())})
 
-if __name__ == '__main__':
+# Cleanup GPIO on exit
+import atexit
+def cleanup_gpio():
+    GPIO.cleanup()
+atexit.register(cleanup_gpio)
+
+# Run Flask app
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
