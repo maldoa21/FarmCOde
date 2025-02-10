@@ -3,10 +3,10 @@ import time
 import sqlite3
 import atexit
 from gpiozero import LED
-from gpiozero.pins.lgpio import LGPIOFactory  # Use lgpio for Raspberry Pi 5
+from gpiozero.pins.native import NativeFactory  # Use NativeFactory to avoid LGPIO issues
 
-# Use lgpio as the pin factory
-pin_factory = LGPIOFactory()
+# Use NativeFactory instead of LGPIOFactory
+pin_factory = NativeFactory()
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -14,7 +14,7 @@ app = Flask(__name__)
 # SQLite Database File
 DB_FILE = "shutters_control.db"
 
-# GPIO Setup using gpiozero with lgpio
+# GPIO Setup using gpiozero with NativeFactory
 SHUTTER_PINS = {
     "shutter_1": LED(17, pin_factory=pin_factory),
     "shutter_2": LED(27, pin_factory=pin_factory)
