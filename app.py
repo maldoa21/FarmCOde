@@ -4,29 +4,51 @@ import requests
 
 app = Flask(__name__)
 
+# Number of test attempts
+NUM_ATTEMPTS = 500
+
 # Simulated Shutter Toggle Test
 def test_shutter_toggle():
-    start_time = time.perf_counter()
-    toggle_state = not True  # Simulating a toggle
-    end_time = time.perf_counter()
+    times = []
     
-    toggle_time = (end_time - start_time) * 1000  # Convert to ms
-    return {"shutter_toggle_time_ms": toggle_time}
+    for _ in range(NUM_ATTEMPTS):
+        start_time = time.perf_counter()
+        toggle_state = not True  # Simulating a toggle
+        end_time = time.perf_counter()
+        
+        times.append((end_time - start_time) * 1000)  # Convert to ms
+    
+    return {
+        "average_toggle_time_ms": sum(times) / NUM_ATTEMPTS,
+        "min_toggle_time_ms": min(times),
+        "max_toggle_time_ms": max(times)
+    }
 
 # Web Response Time Test
 def test_web_response():
-    start_time = time.perf_counter()
+    times = []
+    successes = 0
+
+    for _ in range(NUM_ATTEMPTS):
+        start_time = time.perf_counter()
+        
+        try:
+            response = requests.get("http://127.0.0.1:5000/ping")  # Ping local server
+            success = response.status_code == 200
+            if success:
+                successes += 1
+        except requests.exceptions.RequestException:
+            success = False
+        
+        end_time = time.perf_counter()
+        times.append((end_time - start_time) * 1000)  # Convert to ms
     
-    try:
-        response = requests.get("http://127.0.0.1:5000/ping")  # Ping local server
-        success = response.status_code == 200
-    except requests.exceptions.RequestException:
-        success = False
-    
-    end_time = time.perf_counter()
-    response_time = (end_time - start_time) * 1000  # Convert to ms
-    
-    return {"success": success, "response_time_ms": response_time}
+    return {
+        "success_rate": (successes / NUM_ATTEMPTS) * 100,
+        "average_response_time_ms": sum(times) / NUM_ATTEMPTS,
+        "min_response_time_ms": min(times),
+        "max_response_time_ms": max(times)
+    }
 
 @app.route('/test/shutter')
 def shutter_test():
