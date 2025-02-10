@@ -1,8 +1,8 @@
-
-from flask import Flask, jsonify
+from flask import Flask, render_template_string, jsonify
 import time
 import sqlite3
-import atexit
+import datetime
+import random
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def init_db():
                         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
                     )''')
         # Insert default shutters if they don't exist
-        c.execute("INSERT OR IGNORE INTO shutters (name, status) VALUES ('shutter_1', 'closed'), ('shutter_2', 'closed')")
+        c.execute("INSERT OR IGNORE INTO shutters (name, status) VALUES ('Shutter 1', 'closed'), ('Shutter 2', 'closed')")
         conn.commit()
 
 # Initialize the database
@@ -57,6 +57,10 @@ def update_shutter_status(shutter_name, new_status):
         c = conn.cursor()
         c.execute("UPDATE shutters SET status = ? WHERE name = ?", (new_status, shutter_name))
         conn.commit()
+
+# Function to simulate getting a temperature reading
+def get_temperature():
+    return round(random.uniform(50.0, 90.0), 2)  # Simulated Fahrenheit reading
 
 # Function to toggle shutters and measure time
 def toggle_shutter(shutter_name):
@@ -96,7 +100,94 @@ def test_web_response():
 # Flask Routes
 @app.route("/")
 def home():
-    return "Shutter Control System Running", 200
+    with sqlite3.connect(DB_FILE) as conn:
+        c = conn.cursor()
+        c.execute("SELECT name, status FROM shutters")
+        shutters = [{"name": row[0], "status": row[1]} for row in c.fetchall()]
+
+    current_time = datetime.datetime.now().strftime("%I:%M %p, %m/%d/%Y")  # US format, 12-hour clock
+    temperature = get_temperature()  # Simulated temperature value
+
+    html_template = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shutter Control System</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                background-color: #f4f4f4;
+                padding: 20px;
+            }
+            h1 {
+                color: #333;
+            }
+            table {
+                width: 60%;
+                margin: 0 auto;
+                border-collapse: collapse;
+                background: white;
+            }
+            th, td {
+                padding: 12px;
+                border: 1px solid #ddd;
+            }
+            th {
+                background-color: #007BFF;
+                color: white;
+            }
+            .toggle-button {
+                padding: 10px 15px;
+                font-size: 14px;
+                color: white;
+                background: green;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Shutter Control System</h1>
+        <p><strong>Current Time:</strong> {{ current_time }}</p>
+        <p><strong>Current Temperature:</strong> {{ temperature }}°F</p>
+        
+        <table>
+            <tr>
+                <th>Shutter Name</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for shutter in shutters %}
+            <tr>
+                <td>{{ shutter.name }}</td>
+                <td>{{ shutter.status }}</td>
+                <td>
+                    <button class="toggle-button" onclick="toggleShutter('{{ shutter.name }}')">Toggle</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <script>
+            function toggleShutter(shutterName) {
+                fetch('/toggle/' + shutterName)
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('Toggled: ' + data.shutter + ' (Toggle Time: ' + data.toggle_time_ms + 'ms)');
+                        location.reload();
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        </script>
+    </body>
+    </html>
+    """
+    
+    return render_template_string(html_template, shutters=shutters, current_time=current_time, temperature=temperature)
 
 @app.route("/toggle/<shutter_name>")
 def toggle(shutter_name):
