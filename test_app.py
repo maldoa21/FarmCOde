@@ -1,47 +1,62 @@
-import unittest
 import requests
 import time
 
-# Replace this with your Raspberry Pi’s IP address
-PI_IP = "192.168.1.131"  
-BASE_URL = f"http://{PI_IP}:5000"
+# API Endpoints
+URL_TOGGLE = "http://127.0.0.1:5000/toggle_shutter"
+URL_STATUS = "http://127.0.0.1:5000/status"
 
-# Define GPIO pins to test
-TEST_PINS = [17, 18, 22, 23]
+# Test Shutter Toggle Time
+def test_shutter_toggle():
+    results = []
+    for i in range(500):
+        start_time = time.time()
+        try:
+            response = requests.get(URL_TOGGLE).json()
+            toggle_time = response.get("toggle_time_ms", -1)
+            results.append(toggle_time)
 
-class TestRaspberryPiGPIO(unittest.TestCase):
+            print(f"Test {i+1}: Shutter Toggle Time = {toggle_time:.2f} ms")
+        except requests.exceptions.RequestException as e:
+            print(f"Test {i+1}: FAILED - {e}")
+        
+        time.sleep(0.1)  # Small delay to avoid overload
 
-    def test_toggle_pins(self):
-        """Toggle each pin 500 times and log the response time."""
-        log_data = []
+    avg_time = sum(results) / len(results) if results else 0
+    print(f"\nAverage Shutter Toggle Time: {avg_time:.2f} ms")
+    return results
 
-        for pin in TEST_PINS:
-            for i in range(500):
-                start_time = time.time()
-                response = requests.post(f"{BASE_URL}/toggle/{pin}")
-                end_time = time.time()
-                duration = round((end_time - start_time) * 1000, 2)  # Convert to ms
+# Test Web Response Time
+def test_web_response():
+    results = []
+    success_count = 0
 
-                log_data.append({"pin": pin, "test_number": i+1, "response_time_ms": duration})
-                self.assertEqual(response.status_code, 200)
+    for i in range(100):
+        start_time = time.time()
+        try:
+            response = requests.get(URL_STATUS)
+            end_time = time.time()
+            response_time = (end_time - start_time) * 1000  # Convert to ms
 
-        # Save log results
-        with open("gpio_toggle_test_log.csv", "w") as f:
-            f.write("Pin,Test Number,Response Time (ms)\n")
-            for log in log_data:
-                f.write(f"{log['pin']},{log['test_number']},{log['response_time_ms']}\n")
+            if response.status_code == 200:
+                success_count += 1
 
-    def test_pin_status(self):
-        """Check the status of each pin after toggling."""
-        for pin in TEST_PINS:
-            response = requests.get(f"{BASE_URL}/status/{pin}")
-            self.assertEqual(response.status_code, 200)
-            self.assertIn(response.json()["state"], ["HIGH", "LOW"])
+            results.append(response_time)
+            print(f"Test {i+1}: Web Response Time = {response_time:.2f} ms")
 
-    def test_invalid_pin(self):
-        """Ensure the API returns an error for invalid pins."""
-        response = requests.post(f"{BASE_URL}/toggle/999")  # Invalid pin
-        self.assertEqual(response.status_code, 400)
+        except requests.exceptions.RequestException as e:
+            print(f"Test {i+1}: FAILED - {e}")
+        
+        time.sleep(0.1)
+
+    avg_time = sum(results) / len(results) if results else 0
+    success_rate = (success_count / 100) * 100
+    print(f"\nSuccess Rate: {success_rate:.2f}%")
+    print(f"Average Web Response Time: {avg_time:.2f} ms")
+    return results
 
 if __name__ == "__main__":
-    unittest.main()
+    print("Starting Shutter Toggle Test...")
+    toggle_results = test_shutter_toggle()
+
+    print("\nStarting Web Response Time Test...")
+    web_results = test_web_response()
