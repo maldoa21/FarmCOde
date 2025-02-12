@@ -1,11 +1,16 @@
-from flask import Flask, render_template_string, jsonify
+from flask import Flask, render_template_string, jsonify, request, abort
 import time
 import sqlite3
 import datetime
 import random
+from functools import wraps
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Security Configuration
+API_KEY = "your_secure_api_key"  # Replace with a strong API key
+RATE_LIMIT = {}  # Dictionary to track API request timestamps per IP
 
 # SQLite Database File
 DB_FILE = "shutters_control.db"
@@ -37,6 +42,24 @@ def init_db():
 # Initialize the database
 init_db()
 
+# Security Decorator for API Key Authentication
+def require_api_key(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if request.headers.get("X-API-KEY") != API_KEY:
+            abort(403)  # Forbidden
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Rate Limiting Function
+def rate_limiter():
+    ip = request.remote_addr
+    current_time = time.time()
+    if ip in RATE_LIMIT:
+        if current_time - RATE_LIMIT[ip] < 2:  # 2-second cooldown per request
+            abort(429, "Too many requests. Please wait.")
+    RATE_LIMIT[ip] = current_time
+
 # Function to log events
 def insert_log(event):
     with sqlite3.connect(DB_FILE) as conn:
@@ -57,13 +80,16 @@ def get_temperature():
 
 # Function to change shutter status
 def change_shutter_status(shutter_name, new_status):
+    if new_status not in ["open", "closed", "automatic"]:
+        return {"error": "Invalid status"}, 400
+
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute("SELECT status FROM shutters WHERE name = ?", (shutter_name,))
         result = c.fetchone()
 
     if not result:
-        return {"error": "Shutter not found"}
+        return {"error": "Shutter not found"}, 404
 
     # Simulate processing delay for status change
     time.sleep(1)
@@ -160,34 +186,28 @@ def home():
 
         <script>
             function changeStatus(shutterName, newStatus) {
-                fetch('/change_status/' + encodeURIComponent(shutterName) + '/' + newStatus)
-                    .then(response => response.json())
-                    .then(data => {
-                        alert('Shutter: ' + data.shutter + ' changed to ' + data.new_status);
-                        location.reload();
-                    })
-                    .catch(error => console.error('Error:', error));
+                fetch('/change_status/' + encodeURIComponent(shutterName) + '/' + newStatus, {
+                    headers: { "X-API-KEY": "{{ api_key }}" }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Shutter: ' + data.shutter + ' changed to ' + data.new_status);
+                    location.reload();
+                })
+                .catch(error => console.error('Error:', error));
             }
         </script>
     </body>
     </html>
     """
 
-    return render_template_string(html_template, shutters=shutters, current_time=current_time, temperature=temperature)
+    return render_template_string(html_template, shutters=shutters, current_time=current_time, temperature=temperature, api_key=API_KEY)
 
 @app.route("/change_status/<shutter_name>/<new_status>")
+@require_api_key
 def change_status(shutter_name, new_status):
-    if new_status not in ["open", "closed", "automatic"]:
-        return jsonify({"error": "Invalid status"}), 400
+    rate_limiter()
     return jsonify(change_shutter_status(shutter_name, new_status))
-
-@app.route("/status")
-def status():
-    with sqlite3.connect(DB_FILE) as conn:
-        c = conn.cursor()
-        c.execute("SELECT name, status FROM shutters WHERE name IN ('Slug Sidewall', 'Slug Shutter')")
-        shutters = [{"name": row[0], "status": row[1]} for row in c.fetchall()]
-    return jsonify({"status": "online", "available_shutters": shutters})
 
 # Run Flask app
 if __name__ == "__main__":
