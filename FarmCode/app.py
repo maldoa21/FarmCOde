@@ -147,7 +147,7 @@ def home():
             {% for shutter in shutters %}
             <tr>
                 <td>{{ shutter.name }}</td>
-                <td id="status-{{ shutter.name }}">{{ shutter.status }}</td>
+                <td id="status-{{ shutter.name | replace(' ', '_') }}">{{ shutter.status }}</td>
                 <td class="action-buttons">
                     <button class="action-button open-btn" onclick="changeStatus('{{ shutter.name }}', 'open')">Open</button>
                     <button class="action-button close-btn" onclick="changeStatus('{{ shutter.name }}', 'closed')">Close</button>
@@ -166,7 +166,8 @@ def home():
                 .then(response => response.json())
                 .then(data => {
                     if (data.shutter) {
-                        document.getElementById('status-' + shutterName).innerText = data.new_status;
+                        let formattedName = data.shutter.replace(/ /g, '_');
+                        document.getElementById('status-' + formattedName).innerText = data.new_status;
                     } else {
                         alert('Error: ' + data.error);
                     }
