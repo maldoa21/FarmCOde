@@ -4,7 +4,7 @@ import sqlite3
 import datetime
 import random
 
-# Initialize Flask app
+# Initialize Flask app ps
 app = Flask(__name__)
 
 # SQLite Database File
