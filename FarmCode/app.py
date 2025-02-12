@@ -4,7 +4,7 @@ import sqlite3
 import datetime
 import random
 
-# Initialize Flask app y
+# Initialize Flask app
 app = Flask(__name__)
 
 # SQLite Database File
@@ -17,7 +17,7 @@ def init_db():
         c.execute('''CREATE TABLE IF NOT EXISTS shutters (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         name TEXT UNIQUE NOT NULL,
-                        status TEXT NOT NULL CHECK(status IN ('open', 'closed'))
+                        status TEXT NOT NULL CHECK(status IN ('open', 'closed', 'automatic'))
                     )''')
         c.execute('''CREATE TABLE IF NOT EXISTS logs (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,27 +31,20 @@ def init_db():
                         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
                     )''')
         # Insert default shutters if they don't exist
-        c.execute("INSERT OR IGNORE INTO shutters (name, status) VALUES ('Shutter 1', 'closed'), ('Shutter 2', 'closed')")
+        c.execute("INSERT OR IGNORE INTO shutters (name, status) VALUES ('Slug Sidewall', 'closed'), ('Slug Shutter', 'closed')")
         conn.commit()
 
 # Initialize the database
 init_db()
 
-# Function to log results to the database
-def save_results(test_type, value):
-    with sqlite3.connect(DB_FILE) as conn:
-        c = conn.cursor()
-        c.execute("INSERT INTO performance (test_type, measured_value) VALUES (?, ?)", (test_type, value))
-        conn.commit()
-
-# Function to insert log entries
+# Function to log events
 def insert_log(event):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute("INSERT INTO logs (event) VALUES (?)", (event,))
         conn.commit()
 
-# Function to update shutter status in the database
+# Function to update shutter status
 def update_shutter_status(shutter_name, new_status):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
@@ -62,8 +55,8 @@ def update_shutter_status(shutter_name, new_status):
 def get_temperature():
     return round(random.uniform(50.0, 90.0), 2)  # Simulated Fahrenheit reading
 
-# Function to toggle shutters and measure time
-def toggle_shutter(shutter_name):
+# Function to change shutter status
+def change_shutter_status(shutter_name, new_status):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute("SELECT status FROM shutters WHERE name = ?", (shutter_name,))
@@ -72,30 +65,14 @@ def toggle_shutter(shutter_name):
     if not result:
         return {"error": "Shutter not found"}
 
-    current_status = result[0]
-    new_status = "open" if current_status == "closed" else "closed"
-
-    start_time = time.perf_counter()
-    time.sleep(1)  # Simulating the time required to toggle a real shutter
-    end_time = time.perf_counter()
-
-    toggle_time = (end_time - start_time) * 1000  # Convert to milliseconds
+    # Simulate processing delay for status change
+    time.sleep(1)
 
     # Update database
     update_shutter_status(shutter_name, new_status)
-    insert_log(f"Shutter {shutter_name} toggled to {new_status}")
-    save_results("shutter_toggle_time", toggle_time)
+    insert_log(f"Shutter '{shutter_name}' changed to {new_status}")
 
-    return {"shutter": shutter_name, "toggle_time_ms": round(toggle_time, 2)}
-
-# Web response time testing
-def test_web_response():
-    start_time = time.perf_counter()
-    end_time = time.perf_counter()
-    response_time = (end_time - start_time) * 1000  # Convert to milliseconds
-
-    save_results("web_response_time", response_time)
-    return {"response_time_ms": round(response_time, 2)}
+    return {"shutter": shutter_name, "new_status": new_status}
 
 # Flask Routes
 @app.route("/")
@@ -126,7 +103,7 @@ def home():
                 color: #333;
             }
             table {
-                width: 60%;
+                width: 70%;
                 margin: 0 auto;
                 border-collapse: collapse;
                 background: white;
@@ -139,15 +116,22 @@ def home():
                 background-color: #007BFF;
                 color: white;
             }
-            .toggle-button {
-                padding: 10px 15px;
+            .action-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+            .action-button {
+                padding: 8px 15px;
                 font-size: 14px;
                 color: white;
-                background: green;
                 border: none;
                 cursor: pointer;
                 border-radius: 5px;
             }
+            .open-btn { background: green; }
+            .close-btn { background: red; }
+            .auto-btn { background: orange; }
         </style>
     </head>
     <body>
@@ -165,19 +149,21 @@ def home():
             <tr>
                 <td>{{ shutter.name }}</td>
                 <td>{{ shutter.status }}</td>
-                <td>
-                    <button class="toggle-button" onclick="toggleShutter('{{ shutter.name }}')">Toggle</button>
+                <td class="action-buttons">
+                    <button class="action-button open-btn" onclick="changeStatus('{{ shutter.name }}', 'open')">Open</button>
+                    <button class="action-button close-btn" onclick="changeStatus('{{ shutter.name }}', 'closed')">Close</button>
+                    <button class="action-button auto-btn" onclick="changeStatus('{{ shutter.name }}', 'automatic')">Automatic</button>
                 </td>
             </tr>
             {% endfor %}
         </table>
 
         <script>
-            function toggleShutter(shutterName) {
-                fetch('/toggle/' + shutterName)
+            function changeStatus(shutterName, newStatus) {
+                fetch('/change_status/' + shutterName + '/' + newStatus)
                     .then(response => response.json())
                     .then(data => {
-                        alert('Toggled: ' + data.shutter + ' (Toggle Time: ' + data.toggle_time_ms + 'ms)');
+                        alert('Shutter: ' + data.shutter + ' changed to ' + data.new_status);
                         location.reload();
                     })
                     .catch(error => console.error('Error:', error));
@@ -186,16 +172,14 @@ def home():
     </body>
     </html>
     """
-    
+
     return render_template_string(html_template, shutters=shutters, current_time=current_time, temperature=temperature)
 
-@app.route("/toggle/<shutter_name>")
-def toggle(shutter_name):
-    return jsonify(toggle_shutter(shutter_name))
-
-@app.route("/test/web")
-def web_test():
-    return jsonify(test_web_response())
+@app.route("/change_status/<shutter_name>/<new_status>")
+def change_status(shutter_name, new_status):
+    if new_status not in ["open", "closed", "automatic"]:
+        return jsonify({"error": "Invalid status"}), 400
+    return jsonify(change_shutter_status(shutter_name, new_status))
 
 @app.route("/status")
 def status():
