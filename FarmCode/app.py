@@ -4,7 +4,7 @@ import sqlite3
 import datetime
 import random
 
-# Initialize Flask app ps
+# Initialize Flask app
 app = Flask(__name__)
 
 # SQLite Database File
@@ -16,7 +16,7 @@ def init_db():
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS shutters (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        name TEXT UNIQUE NOT NULL,
+                        name TEXT UNIQUE NOT NULL CHECK(name IN ('Slug Sidewall', 'Slug Shutter')),
                         status TEXT NOT NULL CHECK(status IN ('open', 'closed', 'automatic'))
                     )''')
         c.execute('''CREATE TABLE IF NOT EXISTS logs (
@@ -79,7 +79,7 @@ def change_shutter_status(shutter_name, new_status):
 def home():
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
-        c.execute("SELECT name, status FROM shutters")
+        c.execute("SELECT name, status FROM shutters WHERE name IN ('Slug Sidewall', 'Slug Shutter')")
         shutters = [{"name": row[0], "status": row[1]} for row in c.fetchall()]
 
     current_time = datetime.datetime.now().strftime("%I:%M %p, %m/%d/%Y")  # US format, 12-hour clock
@@ -160,7 +160,7 @@ def home():
 
         <script>
             function changeStatus(shutterName, newStatus) {
-                fetch('/change_status/' + shutterName + '/' + newStatus)
+                fetch('/change_status/' + encodeURIComponent(shutterName) + '/' + newStatus)
                     .then(response => response.json())
                     .then(data => {
                         alert('Shutter: ' + data.shutter + ' changed to ' + data.new_status);
@@ -185,7 +185,7 @@ def change_status(shutter_name, new_status):
 def status():
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
-        c.execute("SELECT name, status FROM shutters")
+        c.execute("SELECT name, status FROM shutters WHERE name IN ('Slug Sidewall', 'Slug Shutter')")
         shutters = [{"name": row[0], "status": row[1]} for row in c.fetchall()]
     return jsonify({"status": "online", "available_shutters": shutters})
 
