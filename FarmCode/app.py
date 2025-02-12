@@ -29,36 +29,12 @@ def init_db():
                         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                         event TEXT NOT NULL
                     )''')
-        c.execute('''CREATE TABLE IF NOT EXISTS performance (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        test_type TEXT NOT NULL,
-                        measured_value REAL NOT NULL,
-                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-                    )''')
         # Insert default shutters if they don't exist
         c.execute("INSERT OR IGNORE INTO shutters (name, status) VALUES ('Slug Sidewall', 'closed'), ('Slug Shutter', 'closed')")
         conn.commit()
 
 # Initialize the database
 init_db()
-
-# Security Decorator for API Key Authentication
-def require_api_key(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if request.headers.get("X-API-KEY") != API_KEY:
-            abort(403)  # Forbidden
-        return f(*args, **kwargs)
-    return decorated_function
-
-# Rate Limiting Function
-def rate_limiter():
-    ip = request.remote_addr
-    current_time = time.time()
-    if ip in RATE_LIMIT:
-        if current_time - RATE_LIMIT[ip] < 2:  # 2-second cooldown per request
-            abort(429, "Too many requests. Please wait.")
-    RATE_LIMIT[ip] = current_time
 
 # Function to log events
 def insert_log(event):
@@ -90,9 +66,6 @@ def change_shutter_status(shutter_name, new_status):
 
     if not result:
         return {"error": "Shutter not found"}, 404
-
-    # Simulate processing delay for status change
-    time.sleep(1)
 
     # Update database
     update_shutter_status(shutter_name, new_status)
@@ -174,7 +147,7 @@ def home():
             {% for shutter in shutters %}
             <tr>
                 <td>{{ shutter.name }}</td>
-                <td>{{ shutter.status }}</td>
+                <td id="status-{{ shutter.name }}">{{ shutter.status }}</td>
                 <td class="action-buttons">
                     <button class="action-button open-btn" onclick="changeStatus('{{ shutter.name }}', 'open')">Open</button>
                     <button class="action-button close-btn" onclick="changeStatus('{{ shutter.name }}', 'closed')">Close</button>
@@ -187,12 +160,16 @@ def home():
         <script>
             function changeStatus(shutterName, newStatus) {
                 fetch('/change_status/' + encodeURIComponent(shutterName) + '/' + newStatus, {
+                    method: "POST",
                     headers: { "X-API-KEY": "{{ api_key }}" }
                 })
                 .then(response => response.json())
                 .then(data => {
-                    alert('Shutter: ' + data.shutter + ' changed to ' + data.new_status);
-                    location.reload();
+                    if (data.shutter) {
+                        document.getElementById('status-' + shutterName).innerText = data.new_status;
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
                 })
                 .catch(error => console.error('Error:', error));
             }
@@ -203,10 +180,8 @@ def home():
 
     return render_template_string(html_template, shutters=shutters, current_time=current_time, temperature=temperature, api_key=API_KEY)
 
-@app.route("/change_status/<shutter_name>/<new_status>")
-@require_api_key
+@app.route("/change_status/<shutter_name>/<new_status>", methods=["POST"])
 def change_status(shutter_name, new_status):
-    rate_limiter()
     return jsonify(change_shutter_status(shutter_name, new_status))
 
 # Run Flask app
