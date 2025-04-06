@@ -1,0 +1,156 @@
+
+### Install code, shouldn't need dependencies
+
+# Check existing ssh keys, add to deploy key on github
+ls ~/.ssh/
+cat ~/.ssh/id_rsa.pub
+
+# or use Personal Access Token
+git config --global credential.helper store
+git clone https://github.com/jsonhack/FarmProject.git
+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
+
+# or  use scp
+scp -r src bucknellFarm@FarmRPi5.local:~/FarmCode/
+
+
+###### First test Old then src then Fallback ######
+
+
+### Linux connect codes
+
+# SSH into Farm Pi
+ssh-keygen -R FarmRPi5.local
+ssh bucknellFarm@FarmRPi5.local
+ssh bucknellFarm@<Raspberry_Pi_IP_Address>
+
+# System Information
+hostname -I # Get IP address
+cat /sys/class/net/wlan0/address # Get MAC address for wlan0
+pinout
+gpiodetect
+
+# Optional: Network scan (from local machine)
+ipconfig for Default Gateway
+nmap -sS 192.168.1.0/24
+
+# Update System
+sudo apt update && sudo apt upgrade -y
+
+# Change default password (if needed)
+passwd
+
+# Create project directory
+mkdir farm_project
+
+# Create and activate virtual environment
+python -m venv .farmENV
+source .farmENV/Scripts/activate (windows)
+source .farmENV/bin/activate
+
+# Open the Python script in the nano editor:
+nano FarmH--.py
+# Copy and paste the code into the nano editor
+# Then, Save and exit the editor:
+Press Ctrl+O to save.
+Press Enter to confirm the filename.
+Press Ctrl+X to exit.
+
+# Remove virtual environment
+deactivate
+rm -rf farm_env
+sudo apt remove/purge tmux
+
+### System Shutdown ###
+sudo shutdown -h now
+
+
+# TMUX run
+which tmux / sudo apt install tmux
+tmux new -s farm_session 
+python3 main.py
+# Detach: Ctrl+B, then D, Ctrl+C(END)
+# Reattach: tmux attach -t farm_session, tmux ls
+# Kill: tmux kill-session -t farm_session
+# or Detatched running (-d) with output:
+tmux new -d -s farm_session 'python3 main.py > output.txt 2>&1'
+# Full TMUX run
+tmux new -s farm_session 'python3 main.py'
+
+
+
+##### Setup AutoRun #####
+
+### Make Your Python Script Executable
+chmod +x /c/farmpi5/FarmCode/src/main.py  # Get actual link to file
+
+
+
+### Create a Startup Script to Launch the tmux Session
+nano /home/your_username/start_farmcode_tmux.sh  # Replace your_username
+
+# Add the following content:
+'''
+# Define a session name
+SESSION_NAME="farmcode_session"
+# Start a new tmux session named 'farmcode_session' running the Python script
+tmux new-session -d -s $SESSION_NAME "python3 /c/farmpi5/FarmCode/src/main.py"
+'''
+# or with a git pull first, need to save credentials first:
+'''
+# Define a session name
+SESSION_NAME="farmcode_session"
+# Navigate to the project directory and pull the latest changes
+cd /c/farmpi5/FarmCode/src/
+git pull origin main
+
+# Start a new tmux session named 'farmcode_session' running the Python script
+tmux new-session -d -s $SESSION_NAME "python3 /c/farmpi5/FarmCode/src/main.py"
+'''
+# Save and exit (Ctrl+X, then Y, then Enter).
+
+# Make the script executable:
+chmod +x /home/your_username/start_farmcode_tmux.sh
+
+
+### Set Up the Startup Script to Run on Boot
+crontab -e  # Then if prompted choose nano.
+
+# Add the following line at the end of the file, to remove (# ):
+@reboot /home/your_username/start_farmcode_tmux.sh
+# Save and exit (Ctrl+X, then Y, then Enter).
+
+
+
+### Create an Autostart Entry for the Chromium Browser
+
+# Create a .desktop file in the autostart directory to open Chromium on startup.
+mkdir -p /home/your_username/.config/autostart
+nano /home/your_username/.config/autostart/open_localhost.desktop
+
+# Add the following contents:
+'''
+[Desktop Entry]
+Type=Application
+Exec=chromium-browser --kiosk 'http://localhost:5000'
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Open Localhost
+Comment=Opens localhost:5000 in fullscreen at startup
+'''
+# Save and exit (Ctrl+X, then Y, then Enter).
+
+
+
+### Reboot to Test the Setup
+sudo reboot
+
+
+### Reattach to the tmux Session
+tmux attach -t farmcode_session
+
+
+###Manually open
+/home/your_username/start_farmcode_tmux.sh  # Manually run
+chromium-browser --kiosk 'http://localhost:5000'  # Just Browser

@@ -1,0 +1,627 @@
+{"timestamp": 1740444425.6663425, "event": "Database initialized with updated schema."}
+{"timestamp": 1740444425.666904, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1740444425.6670575, "event": "Flask app starting."}
+{"timestamp": 1740444459.8935359, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740444459.8937235, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740444459.8948286, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740444461.8978398, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740444461.8980923, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740444469.7465155, "event": "Cancelling live operation for Slug Shutter to initiate close."}
+{"timestamp": 1740444469.7467587, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740444469.747235, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740444469.7480297, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1740444469.7483287, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1740444476.8982744, "event": "Slug Shutter: Motor (pin 4) set to LOW, ending OPEN operation."}
+{"timestamp": 1740444476.8985403, "event": "Operation for Slug Shutter was cancelled; skipping final update."}
+{"timestamp": 1740444484.748532, "event": "Slug Shutter: Motor (pin 17) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740444484.760963, "event": "Database: Shutter 'Slug Shutter' status updated to closed."}
+{"timestamp": 1740444484.7615755, "event": "COMPLETE: CLOSE operation completed for Slug Shutter."}
+{"timestamp": 1740444487.7630243, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740444491.7873185, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740444491.7874796, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740444498.2453926, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1740445641.0602734, "event": "Database initialized with updated schema."}
+{"timestamp": 1740445641.0608068, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1740445641.0609338, "event": "Flask app starting."}
+{"timestamp": 1740445648.389327, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740445648.3894753, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740445648.3903265, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740445650.3915942, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740445650.3918166, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740445665.3920708, "event": "Slug Shutter: Motor (pin 4) set to LOW, ending OPEN operation."}
+{"timestamp": 1740445665.4023333, "event": "Database: Shutter 'Slug Shutter' status updated to open."}
+{"timestamp": 1740445665.4054265, "event": "COMPLETE: OPEN operation completed for Slug Shutter."}
+{"timestamp": 1740445665.4252775, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740445665.4256556, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740445668.411092, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740445672.6341996, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740445672.6344059, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740445672.6347198, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740445674.639461, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740445674.6399846, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740445675.2189252, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1740445675.219238, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740445675.2267325, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740445675.2268627, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740445689.6415355, "event": "Slug Shutter: Motor (pin 4) set to LOW, ending OPEN operation."}
+{"timestamp": 1740445689.6423013, "event": "Operation for Slug Shutter was cancelled; skipping final update."}
+{"timestamp": 1740445692.6429377, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740445713.0637348, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1740446404.0327485, "event": "Database initialized with updated schema."}
+{"timestamp": 1740446404.0333023, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1740446404.0334363, "event": "Flask app starting."}
+{"timestamp": 1740446407.2488954, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740446407.2490907, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740446407.2501025, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740446409.251389, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740446409.2517207, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740446411.448458, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1740446411.4486303, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740446411.4587674, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740446411.4589477, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740446424.2519565, "event": "Slug Shutter: Motor (pin 4) set to LOW, ending OPEN operation."}
+{"timestamp": 1740446424.2521968, "event": "Operation for Slug Shutter was cancelled; skipping final update."}
+{"timestamp": 1740446427.2529008, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740446514.6582613, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1740446514.658728, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1740446514.6597307, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1740446516.662635, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740446516.6628792, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1740446525.2664998, "event": "Cancelling live operation for Slug Sidewall to initiate close."}
+{"timestamp": 1740446525.2666922, "event": "Cancellation signal sent for Slug Sidewall."}
+{"timestamp": 1740446525.2670128, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1740446525.267597, "event": "START: CLOSE operation initiated for Slug Sidewall."}
+{"timestamp": 1740446525.2678025, "event": "Slug Sidewall: Motor (pin 22) set to HIGH for CLOSE."}
+{"timestamp": 1740446531.6630716, "event": "Slug Sidewall: Motor (pin 27) set to LOW, ending OPEN operation."}
+{"timestamp": 1740446531.6633244, "event": "Operation for Slug Sidewall was cancelled; skipping final update."}
+{"timestamp": 1740446540.2679582, "event": "Slug Sidewall: Motor (pin 22) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740446540.2758658, "event": "Database: Shutter 'Slug Sidewall' status updated to closed."}
+{"timestamp": 1740446540.276157, "event": "COMPLETE: CLOSE operation completed for Slug Sidewall."}
+{"timestamp": 1740446543.276791, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740446552.3211195, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1740447734.062345, "event": "Database initialized with updated schema."}
+{"timestamp": 1740447734.062892, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1740447734.0630322, "event": "Flask app starting."}
+{"timestamp": 1740447739.831756, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740447739.831919, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740447739.8327165, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740447741.8341103, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740447741.834338, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740447756.8345525, "event": "Slug Shutter: Motor (pin 4) set to LOW, ending OPEN operation."}
+{"timestamp": 1740447756.8462799, "event": "Database: Shutter 'Slug Shutter' status updated to open."}
+{"timestamp": 1740447756.8465078, "event": "COMPLETE: OPEN operation completed for Slug Shutter."}
+{"timestamp": 1740447759.8471403, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740447796.2732778, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740447796.2734694, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740447798.718059, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740447798.7182097, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740447798.7188506, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740447800.7200625, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740447800.7203193, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740447815.7205377, "event": "Slug Shutter: Motor (pin 4) set to LOW, ending OPEN operation."}
+{"timestamp": 1740447815.7300255, "event": "Database: Shutter 'Slug Shutter' status updated to open."}
+{"timestamp": 1740447815.730235, "event": "COMPLETE: OPEN operation completed for Slug Shutter."}
+{"timestamp": 1740447818.730937, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740447824.5415068, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740447824.5416644, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740447826.8345642, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740447826.8347216, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740447826.8353212, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740447828.8365736, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740447828.8368099, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740447833.8488588, "event": "Cancelling live operation for Slug Shutter to initiate close."}
+{"timestamp": 1740447833.8490858, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740447833.8491066, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740447833.8497396, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740447833.8505306, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1740447835.8523774, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740447835.8525982, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1740447836.8516974, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740447850.8528826, "event": "Slug Shutter: Motor (pin 17) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740447850.8651733, "event": "Database: Shutter 'Slug Shutter' status updated to closed."}
+{"timestamp": 1740447850.8654165, "event": "COMPLETE: CLOSE operation completed for Slug Shutter."}
+{"timestamp": 1740447853.8660197, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740447870.419134, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740447870.4192784, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740447872.8404083, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740447872.84062, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740447872.8412993, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740447874.842601, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740447874.842861, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740447879.872932, "event": "Cancelling live operation for Slug Shutter to initiate close."}
+{"timestamp": 1740447879.8732393, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740447879.873255, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740447879.8737514, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740447879.8747942, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1740447881.8782938, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740447881.8791082, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1740447882.8742769, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740447896.8793228, "event": "Slug Shutter: Motor (pin 17) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740447896.8889647, "event": "Database: Shutter 'Slug Shutter' status updated to closed."}
+{"timestamp": 1740447896.8891482, "event": "COMPLETE: CLOSE operation completed for Slug Shutter."}
+{"timestamp": 1740447899.8898497, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740447902.770584, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740447902.7707882, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740447902.7716339, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740447904.7736256, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740447904.7738724, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740447914.2275605, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1740447914.2278047, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740447914.227874, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740447914.2356296, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740447914.2359962, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740447917.22868, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740447920.013517, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740447920.013736, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740447920.0144246, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740447922.0157375, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740447922.0160277, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740447923.0678754, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1740447923.0680997, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740447923.0681827, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740447923.0815783, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740447923.0828211, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740447926.0690587, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740447932.4033313, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1740449439.9792194, "event": "Database initialized with updated schema."}
+{"timestamp": 1740449439.9797637, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1740449439.9799178, "event": "Flask app starting."}
+{"timestamp": 1740449446.2415972, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740449446.2417598, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740449446.242559, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740449448.2439327, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449448.2441716, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740449453.8554711, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1740449453.8559952, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740449453.8563144, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740449453.871055, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740449453.8714223, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740449458.8580496, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740449462.7782164, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740449462.7783654, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740449462.778973, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740449464.781011, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449464.7812564, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740449469.1789181, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1740449469.1791165, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740449469.1791282, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740449469.1868935, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740449469.187067, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740449474.1800983, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740449477.1655555, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740449477.1656885, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740449477.1662788, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740449479.1675057, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449479.167725, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740449484.9379897, "event": "Cancelling live operation for Slug Shutter to initiate close."}
+{"timestamp": 1740449484.9381728, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740449484.9382293, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740449484.9386623, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740449484.9392686, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1740449486.9404876, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449486.9408154, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1740449501.9410462, "event": "Slug Shutter: Motor (pin 17) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740449501.948917, "event": "Database: Shutter 'Slug Shutter' status updated to closed."}
+{"timestamp": 1740449501.9491162, "event": "COMPLETE: CLOSE operation completed for Slug Shutter."}
+{"timestamp": 1740449506.950295, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740449512.9905298, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740449512.9906912, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740449512.9913166, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740449514.9927268, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449514.993245, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740449519.5235798, "event": "Cancelling live operation for Slug Shutter to initiate close."}
+{"timestamp": 1740449519.5237694, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740449519.5237842, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740449519.5242844, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740449519.5251436, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1740449521.5270267, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449521.5275295, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1740449536.527833, "event": "Slug Shutter: Motor (pin 17) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740449536.5400043, "event": "Database: Shutter 'Slug Shutter' status updated to closed."}
+{"timestamp": 1740449536.5401947, "event": "COMPLETE: CLOSE operation completed for Slug Shutter."}
+{"timestamp": 1740449541.5410492, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740449566.8241093, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740449566.824303, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740449574.8295412, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1740449574.8297355, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1740449574.830542, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1740449576.8320205, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449576.832301, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1740449583.2611265, "event": "Cancelling live operation for Slug Sidewall to initiate close."}
+{"timestamp": 1740449583.2613466, "event": "Cancellation signal sent for Slug Sidewall."}
+{"timestamp": 1740449583.2613573, "event": "Operation for Slug Sidewall was cancelled; stopping motor immediately."}
+{"timestamp": 1740449583.2617638, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1740449583.262399, "event": "START: CLOSE operation initiated for Slug Sidewall."}
+{"timestamp": 1740449585.2684283, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449585.2689023, "event": "Slug Sidewall: Motor (pin 22) set to HIGH for CLOSE."}
+{"timestamp": 1740449600.269131, "event": "Slug Sidewall: Motor (pin 22) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740449600.2830968, "event": "Database: Shutter 'Slug Sidewall' status updated to closed."}
+{"timestamp": 1740449600.2833867, "event": "COMPLETE: CLOSE operation completed for Slug Sidewall."}
+{"timestamp": 1740449605.2843094, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740449645.071244, "event": "Database: Shutter 'Slug Sidewall' status updated to automatic."}
+{"timestamp": 1740449645.0714176, "event": "Automatic operation requested for Slug Sidewall."}
+{"timestamp": 1740449650.8911192, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740449650.8913205, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1740449650.8917227, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1740449652.8935552, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1740449652.893819, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1740449656.187885, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1740449656.188053, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1740449656.1887064, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1740449656.1889372, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1740449666.3425448, "event": "Cancelling live operation for Slug Shutter to initiate close."}
+{"timestamp": 1740449666.3428347, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1740449666.3429275, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1740449666.3433535, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1740449666.344087, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1740449666.3449483, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1740449671.1891184, "event": "Slug Sidewall: Motor (pin 27) set to LOW, ending OPEN operation."}
+{"timestamp": 1740449671.1974268, "event": "Database: Shutter 'Slug Sidewall' status updated to open."}
+{"timestamp": 1740449671.1977527, "event": "COMPLETE: OPEN operation completed for Slug Sidewall."}
+{"timestamp": 1740449680.4343584, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1740449680.434689, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1740449680.4361725, "event": "START: CLOSE operation initiated for Slug Sidewall."}
+{"timestamp": 1740449680.4377503, "event": "Slug Sidewall: Motor (pin 22) set to HIGH for CLOSE."}
+{"timestamp": 1740449681.3451538, "event": "Slug Shutter: Motor (pin 17) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740449681.365152, "event": "Database: Shutter 'Slug Shutter' status updated to closed."}
+{"timestamp": 1740449681.3653522, "event": "COMPLETE: CLOSE operation completed for Slug Shutter."}
+{"timestamp": 1740449693.3554618, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1740449693.355732, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1740449695.4381857, "event": "Slug Sidewall: Motor (pin 22) set to LOW, ending CLOSE operation."}
+{"timestamp": 1740449695.4486895, "event": "Database: Shutter 'Slug Sidewall' status updated to closed."}
+{"timestamp": 1740449695.449033, "event": "COMPLETE: CLOSE operation completed for Slug Sidewall."}
+{"timestamp": 1740449700.4499815, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1740449705.8900595, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1741271526.1794825, "event": "Database initialized with updated schema."}
+{"timestamp": 1741271526.1800373, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1741271526.1801894, "event": "Flask app starting."}
+{"timestamp": 1741271534.0261896, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1741271582.826189, "event": "Database initialized with updated schema."}
+{"timestamp": 1741271582.8267415, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1741271582.8268945, "event": "Flask app starting."}
+{"timestamp": 1741317059.412573, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1741317059.4127975, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1741317059.4138246, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1741317061.415203, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741317061.4163072, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1741317062.5563483, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1741317062.5566783, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1741317062.5573506, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1741317062.5654604, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1741317062.5656323, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1741317067.5584714, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741317071.1881344, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1741326696.1549459, "event": "Database initialized with updated schema."}
+{"timestamp": 1741326696.1554954, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1741326696.1556437, "event": "Flask app starting."}
+{"timestamp": 1741326731.926863, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1741326731.9270728, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1741326731.927521, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1741326733.9296334, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741326733.9299068, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1741326744.1732028, "event": "Cancelling live operation for Slug Sidewall to initiate close."}
+{"timestamp": 1741326744.1734316, "event": "Cancellation signal sent for Slug Sidewall."}
+{"timestamp": 1741326744.173446, "event": "Operation for Slug Sidewall was cancelled; stopping motor immediately."}
+{"timestamp": 1741326744.1740434, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1741326744.174379, "event": "START: CLOSE operation initiated for Slug Sidewall."}
+{"timestamp": 1741326746.1768754, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741326746.17706, "event": "Slug Sidewall: Motor (pin 22) set to HIGH for CLOSE."}
+{"timestamp": 1741326749.632758, "event": "Cancelling live operation for Slug Sidewall to initiate automatic mode."}
+{"timestamp": 1741326749.6329877, "event": "Cancellation signal sent for Slug Sidewall."}
+{"timestamp": 1741326749.6337883, "event": "Operation for Slug Sidewall was cancelled; stopping motor immediately."}
+{"timestamp": 1741326749.6446285, "event": "Database: Shutter 'Slug Sidewall' status updated to automatic."}
+{"timestamp": 1741326749.644931, "event": "Automatic operation requested for Slug Sidewall."}
+{"timestamp": 1741326754.6378882, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741326760.4955223, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1741326760.4957209, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1741326760.496514, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1741326762.4978614, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741326762.498139, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1741326764.4272478, "event": "Cancelling live operation for Slug Shutter to initiate close."}
+{"timestamp": 1741326764.4274404, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1741326764.4274573, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1741326764.428111, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1741326764.428871, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1741326766.4301193, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741326766.430398, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1741326768.2141743, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1741326768.2144115, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1741326768.2144744, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1741326768.2225072, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1741326768.2227101, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1741326773.215501, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741326775.797568, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1741373855.3178308, "event": "Database initialized with updated schema."}
+{"timestamp": 1741373855.318389, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1741373855.318553, "event": "Flask app starting."}
+{"timestamp": 1741373938.632169, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1741374009.4732838, "event": "Database initialized with updated schema."}
+{"timestamp": 1741374009.4738333, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1741374009.4739773, "event": "Flask app starting."}
+{"timestamp": 1741374019.8662996, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1741374019.8665068, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1741374019.8675606, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1741374021.8689413, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741374021.869289, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1741374023.665596, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1741374023.6658762, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1741374023.6658938, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1741374023.6765492, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1741374023.6785529, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1741374028.6672068, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741374455.2675903, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1741374455.267779, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1741374455.2681267, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1741374457.270015, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741374457.2702827, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1741374472.2705367, "event": "Slug Shutter: Motor (pin 4) set to LOW, ending OPEN operation."}
+{"timestamp": 1741374472.2781425, "event": "Database: Shutter 'Slug Shutter' status updated to open."}
+{"timestamp": 1741374472.2783222, "event": "COMPLETE: OPEN operation completed for Slug Shutter."}
+{"timestamp": 1741374477.279226, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741374477.929564, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1741374477.9297597, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1741374477.9305584, "event": "START: CLOSE operation initiated for Slug Shutter."}
+{"timestamp": 1741374479.9325268, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741374479.9327967, "event": "Slug Shutter: Motor (pin 17) set to HIGH for CLOSE."}
+{"timestamp": 1741374494.9330485, "event": "Slug Shutter: Motor (pin 17) set to LOW, ending CLOSE operation."}
+{"timestamp": 1741374494.9402132, "event": "Database: Shutter 'Slug Shutter' status updated to closed."}
+{"timestamp": 1741374494.9404032, "event": "COMPLETE: CLOSE operation completed for Slug Shutter."}
+{"timestamp": 1741374497.516883, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1741374497.5170708, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1741374499.9412785, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741374519.1171644, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1741374519.1173732, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1741374519.1177313, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1741374521.1195798, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741374521.119846, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1741374536.0627162, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1741374536.0629132, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1741374536.0632896, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1741374536.064168, "event": "Slug Shutter: Motor (pin 4) set to HIGH for OPEN."}
+{"timestamp": 1741374536.1200566, "event": "Slug Sidewall: Motor (pin 27) set to LOW, ending OPEN operation."}
+{"timestamp": 1741374536.1317976, "event": "Database: Shutter 'Slug Sidewall' status updated to open."}
+{"timestamp": 1741374536.131948, "event": "COMPLETE: OPEN operation completed for Slug Sidewall."}
+{"timestamp": 1741374539.3902647, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1741374539.390453, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1741374539.3908975, "event": "START: CLOSE operation initiated for Slug Sidewall."}
+{"timestamp": 1741374539.39219, "event": "Slug Sidewall: Motor (pin 22) set to HIGH for CLOSE."}
+{"timestamp": 1741374551.0643775, "event": "Slug Shutter: Motor (pin 4) set to LOW, ending OPEN operation."}
+{"timestamp": 1741374551.0733044, "event": "Database: Shutter 'Slug Shutter' status updated to open."}
+{"timestamp": 1741374551.073483, "event": "COMPLETE: OPEN operation completed for Slug Shutter."}
+{"timestamp": 1741374554.3924267, "event": "Slug Sidewall: Motor (pin 22) set to LOW, ending CLOSE operation."}
+{"timestamp": 1741374554.4013162, "event": "Database: Shutter 'Slug Sidewall' status updated to closed."}
+{"timestamp": 1741374554.401522, "event": "COMPLETE: CLOSE operation completed for Slug Sidewall."}
+{"timestamp": 1741374559.4024427, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741374619.0900042, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1741374619.0901964, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1741374619.090542, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1741374620.3687766, "event": "Cancelling live operation for Slug Sidewall to initiate close."}
+{"timestamp": 1741374620.3689926, "event": "Cancellation signal sent for Slug Sidewall."}
+{"timestamp": 1741374620.369537, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1741374620.370428, "event": "START: CLOSE operation initiated for Slug Sidewall."}
+{"timestamp": 1741374621.0925562, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741374621.09284, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1741374621.0929804, "event": "Operation for Slug Sidewall was cancelled; stopping motor immediately."}
+{"timestamp": 1741374621.0928586, "event": "Slug Sidewall: Motor (pin 22) set to HIGH for CLOSE."}
+{"timestamp": 1741374636.093539, "event": "Slug Sidewall: Motor (pin 22) set to LOW, ending CLOSE operation."}
+{"timestamp": 1741374636.1019466, "event": "Database: Shutter 'Slug Sidewall' status updated to closed."}
+{"timestamp": 1741374636.10214, "event": "COMPLETE: CLOSE operation completed for Slug Sidewall."}
+{"timestamp": 1741374641.1029909, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741374739.599463, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1741375857.906788, "event": "Database initialized with updated schema."}
+{"timestamp": 1741375857.907339, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1741375857.9075139, "event": "Flask app starting."}
+{"timestamp": 1741375868.0345287, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1741375868.0347297, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1741375868.0351536, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1741375870.0372133, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1741375870.03749, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1741375885.0377107, "event": "Slug Sidewall: Motor (pin 27) set to LOW, ending OPEN operation."}
+{"timestamp": 1741375885.0455813, "event": "Database: Shutter 'Slug Sidewall' status updated to open."}
+{"timestamp": 1741375885.0457795, "event": "COMPLETE: OPEN operation completed for Slug Sidewall."}
+{"timestamp": 1741375890.0466092, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1741377189.305587, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1742235275.4935734, "event": "Database initialized with updated schema."}
+{"timestamp": 1742235275.4948447, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1742235275.4949918, "event": "Flask app starting."}
+{"timestamp": 1742235279.8250074, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1743014444.3570864, "event": "Database initialized with updated schema."}
+{"timestamp": 1743014444.3585231, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743014444.358688, "event": "Flask app starting."}
+{"timestamp": 1743014479.9480317, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1743014479.9482358, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1743014479.9492435, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1743014481.950686, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1743014481.9509513, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1743014484.1632407, "event": "Cancelling live operation for Slug Sidewall to initiate close."}
+{"timestamp": 1743014484.163495, "event": "Cancellation signal sent for Slug Sidewall."}
+{"timestamp": 1743014484.163547, "event": "Operation for Slug Sidewall was cancelled; stopping motor immediately."}
+{"timestamp": 1743014484.1649601, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1743014484.1670454, "event": "START: CLOSE operation initiated for Slug Sidewall."}
+{"timestamp": 1743014486.1695416, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1743014486.1698294, "event": "Slug Sidewall: Motor (pin 22) set to HIGH for CLOSE."}
+{"timestamp": 1743014496.562547, "event": "Cancelling live operation for Slug Sidewall to initiate automatic mode."}
+{"timestamp": 1743014496.5632167, "event": "Cancellation signal sent for Slug Sidewall."}
+{"timestamp": 1743014496.5634787, "event": "Operation for Slug Sidewall was cancelled; stopping motor immediately."}
+{"timestamp": 1743014496.5762284, "event": "Database: Shutter 'Slug Sidewall' status updated to automatic."}
+{"timestamp": 1743014496.576451, "event": "Automatic operation requested for Slug Sidewall."}
+{"timestamp": 1743014501.5651479, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1743014509.5455582, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1743014571.0128489, "event": "Database initialized with updated schema."}
+{"timestamp": 1743014571.013391, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743014571.013539, "event": "Flask app starting."}
+{"timestamp": 1743014579.1021266, "event": "Database: Shutter 'Slug Sidewall' status updated to live."}
+{"timestamp": 1743014579.1023517, "event": "Manual operation requested for Slug Sidewall."}
+{"timestamp": 1743014579.1048262, "event": "START: OPEN operation initiated for Slug Sidewall."}
+{"timestamp": 1743014581.1072202, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1743014581.107486, "event": "Slug Sidewall: Motor (pin 27) set to HIGH for OPEN."}
+{"timestamp": 1743014596.1077168, "event": "Slug Sidewall: Motor (pin 27) set to LOW, ending OPEN operation."}
+{"timestamp": 1743014596.1177292, "event": "Database: Shutter 'Slug Sidewall' status updated to open."}
+{"timestamp": 1743014596.1188457, "event": "COMPLETE: OPEN operation completed for Slug Sidewall."}
+{"timestamp": 1743014601.1219625, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1743014624.574735, "event": "Signal received, shutting down gracefully."}
+{"timestamp": 1743454660.3627646, "event": "Sensor monitoring enabled (default setting)."}
+{"timestamp": 1743454660.3635452, "event": "Sensor monitoring thread starting..."}
+{"timestamp": 1743454660.364009, "event": "Starting continuous sensor monitoring..."}
+{"timestamp": 1743454660.364493, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/serial0]"}
+{"timestamp": 1743454660.3970792, "event": "Database initialized with updated schema."}
+{"timestamp": 1743454660.3977263, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743454660.3978467, "event": "Flask app starting on 0.0.0.0:5000"}
+{"timestamp": 1743454663.365118, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/serial0]"}
+{"timestamp": 1743454666.3681211, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/serial0]"}
+{"timestamp": 1743454669.369795, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/serial0]"}
+{"timestamp": 1743454672.3735967, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/serial0]"}
+{"timestamp": 1743454675.3755863, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/serial0]"}
+{"timestamp": 1743454676.0485494, "event": "Signal 2 received, shutting down gracefully."}
+{"timestamp": 1743455812.9528553, "event": "Sensor monitoring enabled (default setting)."}
+{"timestamp": 1743455812.9532216, "event": "Sensor monitoring thread starting..."}
+{"timestamp": 1743455812.9536684, "event": "Starting continuous sensor monitoring..."}
+{"timestamp": 1743455812.954156, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743455812.9867666, "event": "Database initialized with updated schema."}
+{"timestamp": 1743455812.9876223, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743455812.987699, "event": "Flask app starting on 0.0.0.0:5000"}
+{"timestamp": 1743455815.9576774, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743455818.9613392, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743455821.9650621, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743455824.9687233, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743455826.9683425, "event": "Signal 2 received, shutting down gracefully."}
+{"timestamp": 1743456053.948874, "event": "Sensor monitoring enabled (default setting)."}
+{"timestamp": 1743456053.9492555, "event": "Sensor monitoring thread starting..."}
+{"timestamp": 1743456053.9497352, "event": "Starting continuous sensor monitoring..."}
+{"timestamp": 1743456053.9502563, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456053.986019, "event": "Database initialized with updated schema."}
+{"timestamp": 1743456053.9866066, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743456053.9867163, "event": "Flask app starting on 0.0.0.0:5000"}
+{"timestamp": 1743456056.9537992, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456059.9575334, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456062.9612398, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456065.9649277, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456068.9686127, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456069.3800313, "event": "Signal 2 received, shutting down gracefully."}
+{"timestamp": 1743456115.7876427, "event": "Sensor monitoring enabled (default setting)."}
+{"timestamp": 1743456115.788018, "event": "Sensor monitoring thread starting..."}
+{"timestamp": 1743456115.7884722, "event": "Starting continuous sensor monitoring..."}
+{"timestamp": 1743456115.8046408, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456115.8249507, "event": "Database initialized with updated schema."}
+{"timestamp": 1743456115.8255975, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743456115.825678, "event": "Flask app starting on 0.0.0.0:5000"}
+{"timestamp": 1743456118.816299, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456121.827471, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456124.838698, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456127.8497515, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456130.8608997, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743456133.591067, "event": "Signal 2 received, shutting down gracefully."}
+{"timestamp": 1743456133.8642187, "event": "Sensor monitoring stopped"}
+{"timestamp": 1743456133.86462, "event": "Sensor monitoring thread stopped"}
+{"timestamp": 1743617002.7282593, "event": "Sensor monitoring enabled (default setting)."}
+{"timestamp": 1743617002.728666, "event": "Sensor monitoring thread starting..."}
+{"timestamp": 1743617002.729156, "event": "Starting continuous sensor monitoring..."}
+{"timestamp": 1743617002.7442894, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617002.750681, "event": "Database initialized with updated schema."}
+{"timestamp": 1743617002.7511842, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743617002.7512615, "event": "Flask app starting on 0.0.0.0:5000"}
+{"timestamp": 1743617005.7553535, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617008.7665718, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617011.7777495, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617014.7888532, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617017.8000126, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617020.8111906, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617023.8223097, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617026.8334239, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617029.8445334, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617032.8556912, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617035.866843, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617038.8780012, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617041.88914, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617044.4603305, "event": "Signal 2 received, shutting down gracefully."}
+{"timestamp": 1743617044.8924563, "event": "Sensor monitoring stopped"}
+{"timestamp": 1743617044.8928435, "event": "Sensor monitoring thread stopped"}
+{"timestamp": 1743617091.5250878, "event": "Sensor monitoring enabled (default setting)."}
+{"timestamp": 1743617091.5254805, "event": "Sensor monitoring thread starting..."}
+{"timestamp": 1743617091.5259707, "event": "Starting continuous sensor monitoring..."}
+{"timestamp": 1743617091.5419738, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617091.5478415, "event": "Database initialized with updated schema."}
+{"timestamp": 1743617091.548336, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743617091.5484183, "event": "Flask app starting on 0.0.0.0:5000"}
+{"timestamp": 1743617094.552709, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617097.5639164, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617100.5751383, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617103.5862193, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617106.5973587, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617109.6085093, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617112.61968, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617115.6307735, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617118.641901, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617121.6530473, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617124.6641986, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617127.6753411, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617130.6864865, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617133.6976657, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617136.7087963, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617139.719936, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617142.7312136, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617145.7422438, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617148.7534292, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617151.7645254, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617154.7756872, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617157.7868316, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617160.7979853, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617163.8091164, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617166.8202589, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617169.8314142, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617172.8425615, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617175.8537197, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617178.8648515, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617181.8759983, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617184.8871496, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617187.8983145, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617190.9094472, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617193.9205801, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617196.93181, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617199.943014, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617202.9540677, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617205.9651852, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617208.976368, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617211.9874933, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617214.998633, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617218.0097826, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617221.020938, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617224.0320778, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617227.043216, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617230.056406, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617233.0675242, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617236.0903418, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617239.1019251, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617242.112991, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617245.122113, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617246.6852002, "event": "Database: Shutter 'Slug Shutter' status updated to live."}
+{"timestamp": 1743617246.685594, "event": "Manual operation requested for Slug Shutter."}
+{"timestamp": 1743617246.686277, "event": "START: OPEN operation initiated for Slug Shutter."}
+{"timestamp": 1743617248.133255, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617248.6881316, "event": "Global LED start sequence completed; LED is now ON."}
+{"timestamp": 1743617248.68834, "event": "Slug Shutter: Motor (pin 3) set to HIGH for OPEN."}
+{"timestamp": 1743617250.3927987, "event": "Cancelling live operation for Slug Shutter to initiate automatic mode."}
+{"timestamp": 1743617250.392988, "event": "Cancellation signal sent for Slug Shutter."}
+{"timestamp": 1743617250.3930445, "event": "Operation for Slug Shutter was cancelled; stopping motor immediately."}
+{"timestamp": 1743617250.4054148, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1743617250.4057448, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1743617251.1449978, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617254.1565125, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617255.394106, "event": "Global LED stop sequence completed; LED is now OFF."}
+{"timestamp": 1743617256.320734, "event": "Database: Shutter 'Slug Shutter' status updated to automatic."}
+{"timestamp": 1743617256.3211083, "event": "Automatic operation requested for Slug Shutter."}
+{"timestamp": 1743617257.165784, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617259.7028472, "event": "Signal 2 received, shutting down gracefully."}
+{"timestamp": 1743617260.1691763, "event": "Sensor monitoring stopped"}
+{"timestamp": 1743617260.169653, "event": "Sensor monitoring thread stopped"}
+{"timestamp": 1743617296.2581391, "event": "Sensor monitoring enabled (default setting)."}
+{"timestamp": 1743617296.2585275, "event": "Sensor monitoring thread starting..."}
+{"timestamp": 1743617296.2621543, "event": "Starting continuous sensor monitoring..."}
+{"timestamp": 1743617296.2776706, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617296.287638, "event": "Database initialized with updated schema."}
+{"timestamp": 1743617296.2882729, "event": "GPIO initialized for output-only shutter control."}
+{"timestamp": 1743617296.288368, "event": "Flask app starting on 0.0.0.0:5000"}
+{"timestamp": 1743617299.2889075, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617302.2999935, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617305.312063, "event": "Modbus Exception: Modbus Error: [Connection] Failed to connect[AsyncModbusSerialClient None:/dev/ttyUSB0]"}
+{"timestamp": 1743617306.185237, "event": "Signal 2 received, shutting down gracefully."}
