@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shutter Control System</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ui.css') }}">
+</head>
+<body>
+  <h1>Shutter Control System</h1>
+  <p id="temperature">Current Temperature: {{ temperature }} °F</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Shutter Name</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Slug Shutter</td>
+        <td id="status-Slug_Shutter">{{ slug_shutter_status }}</td>
+        <td class="action-buttons">
+          <button class="action-button open-btn" onclick="changeStatus('Slug Shutter', 'open')">Open</button>
+          <button class="action-button close-btn" onclick="changeStatus('Slug Shutter', 'close')">Close</button>
+          <button class="action-button auto-btn" onclick="changeStatus('Slug Shutter', 'automatic')">Automatic</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Slug Sidewall</td>
+        <td id="status-Slug_Sidewall">{{ slug_sidewall_status }}</td>
+        <td class="action-buttons">
+          <button class="action-button open-btn" onclick="changeStatus('Slug Sidewall', 'open')">Open</button>
+          <button class="action-button close-btn" onclick="changeStatus('Slug Sidewall', 'close')">Close</button>
+          <button class="action-button auto-btn" onclick="changeStatus('Slug Sidewall', 'automatic')">Automatic</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    let motorPollInterval = null;
+
+    // Function to dynamically start polling while a motor operation is active.
+    const startMotorStatusPolling = () => {
+      if (motorPollInterval) return; // Already polling
+      motorPollInterval = setInterval(() => {
+        updateStatuses();
+        // Get active motor count to decide when to stop polling.
+        fetch('/active_motor_count?ts=' + new Date().getTime(), {cache: 'no-store'})
+          .then(res => res.json())
+          .then(data => {
+            if (data.count <= 0) {
+              clearInterval(motorPollInterval);
+              motorPollInterval = null;
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching motor count:", error);
+          });
+      }, 100); // Poll every 100ms
+    };
+
+    // Function to update all shutter statuses.
+    const updateStatuses = () => {
+      const devices = ['Slug Shutter', 'Slug Sidewall'];
+      devices.forEach(device => {
+        fetch(`/status/${encodeURIComponent(device)}?t=${new Date().getTime()}`, {cache: 'no-store'})
+          .then(res => res.json())
+          .then(data => {
+            const id = `status-${device.replace(/ /g, '_')}`;
+            const cell = document.getElementById(id);
+            if (cell) {
+              cell.innerText = data.status;
+            }
+          })
+          .catch(error => {
+            console.error(`Polling error for ${device}:`, error);
+          });
+      });
+    };
+
+    // Update temperature every 10 seconds.
+    const updateTemperature = () => {
+      fetch('/temperature?ts=' + new Date().getTime(), {cache: 'no-store'})
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('temperature').innerText = `Current Temperature: ${data.temperature} °F`;
+        })
+        .catch(console.error);
+    };
+    setInterval(updateTemperature, 10000);
+
+    // On button press, send request to change shutter status.
+    const changeStatus = (device, action) => {
+      console.log(`Requesting status change for ${device} to ${action}`);
+      fetch(`/change_status/${encodeURIComponent(device)}/${encodeURIComponent(action)}`, {
+        method: 'POST',
+        cache: 'no-store'
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(`Change status response:`, data);
+        // Start the dynamic polling when a new operation begins.
+        startMotorStatusPolling();
+      })
+      .catch(error => {
+        console.error(`Error changing status:`, error);
+      });
+    };
+  </script>
+</body>
+</html>
