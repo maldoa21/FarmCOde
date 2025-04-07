@@ -11,8 +11,9 @@ from management.config import stop_event
 from DbUI.ui import app  # Your Flask app from ui.py
 from management.logger import log_event
 
-# 🔐 Import authentication blueprint
+# 🔐 Import authentication and shutter data blueprints
 from auth import auth
+from shutter_data import shutter_data
 
 def signal_handler(sig, frame):
     """Handle termination signals by setting the stop event."""
@@ -63,9 +64,10 @@ def main():
     init_db()
     init_gpio()
 
-    # 🔐 Register the authentication blueprint
+    # 🔐 Register blueprints for auth and shutter data routes
     app.secret_key = "your_super_secure_key"
     app.register_blueprint(auth)
+    app.register_blueprint(shutter_data)
 
     # Run Flask app
     log_event("Flask app starting on 0.0.0.0:5000")
