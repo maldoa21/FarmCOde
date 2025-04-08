@@ -10,6 +10,8 @@ from gpio.sensors import monitor_sensors
 from management.config import stop_event
 from DbUI.ui import app  # Your Flask app from ui.py
 from management.logger import log_event
+from auth import auth
+from shutter_data import shutter_data
 
 # 🔐 Import authentication and shutter data blueprints
 from auth import auth
