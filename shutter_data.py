@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template_string
-from DbUI.database import get_all_logs
+from DbUI.database import init_db
 
 shutter_data = Blueprint("shutter_data", __name__)
 
