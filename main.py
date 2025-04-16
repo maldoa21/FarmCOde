@@ -4,7 +4,7 @@ import argparse
 import asyncio
 import threading
 import time
-from flask import Flask, request
+from flask import Flask, request, render_template
 from DbUI.database import init_db
 from gpio.gpio_control import init_gpio
 from gpio.sensors import monitor_sensors
@@ -21,7 +21,7 @@ app = Flask(__name__)
 def home():
     access = request.args.get("access")
     if access == "true":
-        # Render a page with a button to redirect to the UI
+        # Render a page with a button to display the Flask UI
         return """
         <!DOCTYPE html>
         <html>
@@ -31,11 +31,13 @@ def home():
                 body { font-family: Arial; text-align: center; padding-top: 50px; }
                 button { padding: 10px 20px; font-size: 16px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
                 button:hover { background-color: #0056b3; }
+                iframe { width: 80%; height: 500px; border: 1px solid #ccc; margin-top: 20px; }
             </style>
         </head>
         <body>
             <h1>Welcome to the Home Page!</h1>
-            <button onclick="window.location.href='/'">Go to UI</button>
+            <button onclick="document.getElementById('ui-frame').style.display='block'">Open Flask UI</button>
+            <iframe id="ui-frame" src="/" style="display:none;"></iframe>
         </body>
         </html>
         """
