@@ -29,15 +29,15 @@ login_template = """
 </html>
 """
 
-# This route just checks the password, then redirects to home with ?access=true
+# This route just checks the password, then redirects to the UI index page
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
-            # Redirect to the home route with access=true
-            return redirect(url_for("home", access="true"))
+            # Redirect to the UI index page
+            return redirect(url_for("index"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
