@@ -4,18 +4,26 @@ import argparse
 import asyncio
 import threading
 import time
+from flask import Flask, request
 from DbUI.database import init_db
 from gpio.gpio_control import init_gpio
 from gpio.sensors import monitor_sensors
 from management.config import stop_event
-from DbUI.ui import app  # Your Flask app from ui.py
 from management.logger import log_event
-from auth import auth
-from shutter_data import shutter_data
+from auth import auth  # Import the auth blueprint
+from shutter_data import shutter_data  # Import the shutter_data blueprint
 
-# 🔐 Import authentication and shutter data blueprints
-from auth import auth
-from shutter_data import shutter_data
+# Initialize the Flask app
+app = Flask(__name__)
+
+# Define the home route
+@app.route("/home")
+def home():
+    access = request.args.get("access")
+    if access == "true":
+        return "<h1>Welcome to the Home Page!</h1>"
+    else:
+        return "<h1>Access Denied</h1>"
 
 def signal_handler(sig, frame):
     """Handle termination signals by setting the stop event."""
@@ -36,15 +44,6 @@ def run_sensor_monitoring():
     finally:
         loop.close()
         log_event("Sensor monitoring thread stopped")
-
-# Add this route to handle the home page
-@app.route("/home")
-def home():
-    access = request.args.get("access")
-    if access == "true":
-        return "<h1>Welcome to the Home Page!</h1>"
-    else:
-        return "<h1>Access Denied</h1>"
 
 def main():
     # Parse command-line arguments
@@ -75,9 +74,9 @@ def main():
     init_db()
     init_gpio()
 
-    # 🔐 Register blueprints for auth and shutter data routes
+    # Register blueprints for auth and shutter data routes
     app.secret_key = "your_super_secure_key"
-    app.register_blueprint(auth)
+    app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(shutter_data)
 
     # Run Flask app
