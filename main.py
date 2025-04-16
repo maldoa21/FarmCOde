@@ -37,6 +37,15 @@ def run_sensor_monitoring():
         loop.close()
         log_event("Sensor monitoring thread stopped")
 
+# Add this route to handle the home page
+@app.route("/home")
+def home():
+    access = request.args.get("access")
+    if access == "true":
+        return "<h1>Welcome to the Home Page!</h1>"
+    else:
+        return "<h1>Access Denied</h1>"
+
 def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description="Shutter Control System")
