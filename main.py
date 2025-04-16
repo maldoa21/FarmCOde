@@ -21,7 +21,24 @@ app = Flask(__name__)
 def home():
     access = request.args.get("access")
     if access == "true":
-        return "<h1>Welcome to the Home Page!</h1>"
+        # Render a page with a button to redirect to the UI
+        return """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Home</title>
+            <style>
+                body { font-family: Arial; text-align: center; padding-top: 50px; }
+                button { padding: 10px 20px; font-size: 16px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+                button:hover { background-color: #0056b3; }
+            </style>
+        </head>
+        <body>
+            <h1>Welcome to the Home Page!</h1>
+            <button onclick="window.location.href='/'">Go to UI</button>
+        </body>
+        </html>
+        """
     else:
         return "<h1>Access Denied</h1>"
 
