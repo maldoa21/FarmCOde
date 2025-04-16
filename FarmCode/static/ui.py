@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, url_for  # type: ignore , url_for is used in the template
+from flask import Flask, render_template, jsonify, url_for
 import random
 from gpio.shutters import operate_shutter, cancel_shutter_operation, operation_intended_actions
 from DbUI.database import update_shutter_status, get_shutter_status
@@ -47,7 +47,6 @@ def change_status(device, action):
             cancel_shutter_operation(device)
         update_shutter_status(device, "automatic")
         log_event(f"Automatic operation requested for {device}.")
-        # TODO: Add code here for the automatic operation
         return jsonify({"message": f"{device} set to automatic mode."})
 
     # If not live and the requested action is already set, do nothing
@@ -62,7 +61,6 @@ def change_status(device, action):
         else:
             log_event(f"Cancelling live operation for {device} to initiate {action}.")
             cancel_shutter_operation(device)
-            # Start the new operation after cancellation
             update_shutter_status(device, "live")
             threading.Thread(target=operate_shutter, args=(device, action), daemon=True).start()
             return jsonify({"message": f"{device} switching to {action} operation initiated."})
