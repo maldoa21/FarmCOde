@@ -9,6 +9,7 @@
 <body>
   <h1>Shutter Control System</h1>
 
+  <!-- ✅ Temperature dynamically updates here -->
   <p id="temperature">Current Temperature: {{ temperature }} °F</p>
 
   <table>
@@ -58,30 +59,32 @@
     </tbody>
   </table>
 
+  <!-- ✅ Script for live temperature polling -->
   <script>
-    const updateTemperature = () => {
+    function updateTemperature() {
       fetch('/temperature?ts=' + new Date().getTime(), { cache: 'no-store' })
         .then(res => res.json())
         .then(data => {
           document.getElementById('temperature').innerText = `Current Temperature: ${data.temperature} °F`;
         })
         .catch(console.error);
-    };
-    setInterval(updateTemperature, 10000);
-    updateTemperature();
+    }
 
-    const changeStatus = (device, action) => {
+    updateTemperature();  // Initial call
+    setInterval(updateTemperature, 10000);  // Every 10 seconds
+
+    function changeStatus(device, action) {
       fetch(`/change_status/${encodeURIComponent(device)}/${action}`, {
         method: 'POST',
         cache: 'no-store'
       })
       .then(res => res.json())
       .then(data => {
-        updateTemperature();
+        updateTemperature();  // Refresh after button press
         console.log(data.message);
       })
       .catch(console.error);
-    };
+    }
   </script>
 </body>
 </html>
