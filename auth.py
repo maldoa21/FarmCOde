@@ -1,12 +1,12 @@
-from flask import Blueprint, request, redirect, url_for, render_template_string, has_request_context
-import threading
+from flask import Blueprint, request, redirect, url_for, render_template_string, session, has_request_context
+from functools import wraps
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
-# Hardcoded plaintext password
+# Always-required plaintext password
 PLAIN_PASSWORD = "harvestking"
 
-# Login form template
+# Login template
 login_template = """
 <!DOCTYPE html>
 <html>
@@ -30,39 +30,50 @@ login_template = """
 </html>
 """
 
-# Route: GET/POST login form
+# Login route
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
-            return redirect(url_for("index", access="true"))
+            session["logged_in"] = True
+            return redirect(url_for("home"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
 
-# Global password check, safe for GPIO
+# Logout route
+@auth.route("/logout")
+def logout():
+    session.pop("logged_in", None)
+    return redirect(url_for("auth.login"))
+
+# Decorator to protect routes
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect(url_for("auth.login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Global request filter
 @auth.before_app_request
-def require_password_per_request():
-    # Only run this logic in real HTTP request contexts
+def always_require_password():
     if not has_request_context():
-        print(f"[AUTH] Skipped password check (not an HTTP request). Thread: {threading.current_thread().name}")
+        return  # avoid interfering with background threads (like GPIO/sensors)
+
+    # Allow static, login, favicon, and logout routes
+    allowed_paths = [
+        "/auth/login",
+        "/auth/logout",
+        "/static",
+        "/favicon.ico"
+    ]
+    if any(request.path.startswith(p) for p in allowed_paths):
         return
 
-    # Allow the login route and static resources
-    path = request.path
-    if (
-        path.startswith("/auth/login")
-        or path.startswith("/static")
-        or path == "/favicon.ico"
-    ):
-        return
-
-    if request.endpoint == "auth.login":
-        return
-
-    # Require ?access=true for other pages
-    if request.args.get("access") != "true":
-        print(f"[AUTH] Blocking access to {path}. Missing ?access=true")
+    # If not logged in, redirect
+    if not session.get("logged_in"):
         return redirect(url_for("auth.login"))
