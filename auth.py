@@ -1,11 +1,12 @@
 from flask import Blueprint, request, redirect, url_for, render_template_string, has_request_context
+import threading
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
-# Plaintext password
+# Hardcoded plaintext password
 PLAIN_PASSWORD = "harvestking"
 
-# Login HTML template
+# Login form template
 login_template = """
 <!DOCTYPE html>
 <html>
@@ -29,38 +30,39 @@ login_template = """
 </html>
 """
 
-# Login route — redirects to home with ?access=true if correct
+# Route: GET/POST login form
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
-            return redirect(url_for("home", access="true"))
+            return redirect(url_for("index", access="true"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
 
-# Apply access control before any request (but safely!)
+# Global password check, safe for GPIO
 @auth.before_app_request
 def require_password_per_request():
-    # 🛡 Only do this for real HTTP requests (not GPIO threads)
+    # Only run this logic in real HTTP request contexts
     if not has_request_context():
+        print(f"[AUTH] Skipped password check (not an HTTP request). Thread: {threading.current_thread().name}")
         return
 
-    allowed_paths = [
-        "/auth/login",
-        "/static",
-        "/favicon.ico"
-    ]
-
-    # Allow static and login pages
-    if any(request.path.startswith(p) for p in allowed_paths):
+    # Allow the login route and static resources
+    path = request.path
+    if (
+        path.startswith("/auth/login")
+        or path.startswith("/static")
+        or path == "/favicon.ico"
+    ):
         return
 
     if request.endpoint == "auth.login":
         return
 
-    # ⛔ If no password token in URL, redirect to login
+    # Require ?access=true for other pages
     if request.args.get("access") != "true":
+        print(f"[AUTH] Blocking access to {path}. Missing ?access=true")
         return redirect(url_for("auth.login"))
