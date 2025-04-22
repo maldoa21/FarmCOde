@@ -1,8 +1,11 @@
-from flask import Blueprint, request, redirect, url_for, render_template_string
+from flask import Flask, redirect, request, url_for, render_template_string, Blueprint
 
-auth = Blueprint("auth", __name__)
+app = Flask(__name__)
 
-# Always-required plaintext password
+# --- Blueprint setup ---
+auth = Blueprint("auth", __name__, url_prefix="/auth")
+
+# Password required to access app
 PLAIN_PASSWORD = "harvestking"
 
 # Login template
@@ -29,6 +32,7 @@ login_template = """
 </html>
 """
 
+# --- Login Route ---
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
@@ -40,18 +44,35 @@ def login():
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
 
+# --- Access control for all pages ---
 @auth.before_app_request
 def always_require_password():
-    from flask import request
-    # Allow access to specific paths without authentication
+    path = request.path
     allowed_paths = [
-        "/auth/login",  # Login page
-        "/static",      # Static files
-        "/favicon.ico", # Favicon
-        "/home",        # Home page
-        "/"             # UI page
+        "/auth/login",
+        "/static",
+        "/favicon.ico"
     ]
-    # Ensure the request path matches allowed paths
-    if not any(request.path.startswith(p) for p in allowed_paths):
-        if request.endpoint != "auth.login" and request.args.get("access") != "true":
-            return redirect(url_for("auth.login"))
+    if any(path.startswith(p) for p in allowed_paths):
+        return
+    if request.endpoint == "auth.login":
+        return
+    if request.args.get("access") != "true":
+        return redirect(url_for("auth.login"))
+
+# Register the blueprint
+app.register_blueprint(auth)
+
+# --- Example Protected Route ---
+@app.route("/home")
+def home():
+    return "<h1>Welcome to the Shutter Control System</h1>"
+
+# --- Optional UI root redirect ---
+@app.route("/")
+def index():
+    return redirect(url_for("home", access="true"))
+
+# Run the app
+if __name__ == "__main__":
+    app.run(debug=True)
