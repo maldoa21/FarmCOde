@@ -13,16 +13,23 @@ from management.config import DB_FILE
 app = Flask(__name__)
 
 def get_temperature() -> float:
-    """Simulate a temperature measurement."""
     return round(random.uniform(60, 85), 2)
+
+def insert_log_event(event: str):
+    timestamp = datetime.now().strftime("%Y-%m-%d %I:%M %p")
+    try:
+        with sqlite3.connect(DB_FILE) as conn:
+            c = conn.cursor()
+            c.execute("INSERT INTO logs (timestamp, event) VALUES (?, ?)", (timestamp, event))
+            conn.commit()
+    except Exception as e:
+        log_event(f"[ERROR] Failed to insert log event: {e}")
 
 @app.route("/")
 def index():
-    # Fetch shutter status
     slug_shutter_status = get_shutter_status("Slug Shutter")
     slug_sidewall_status = get_shutter_status("Slug Sidewall")
 
-    # Fetch logs from DB and filter last 24 hours
     recent_logs = []
     try:
         with sqlite3.connect(DB_FILE) as conn:
@@ -69,6 +76,7 @@ def change_status(device, action):
             log_event(f"Cancelling live operation for {device} to initiate automatic mode.")
             cancel_shutter_operation(device)
         update_shutter_status(device, "automatic")
+        insert_log_event(f"{device} set to automatic mode via UI button")
         log_event(f"Automatic operation requested for {device}.")
         return jsonify({"message": f"{device} set to automatic mode."})
 
@@ -83,11 +91,13 @@ def change_status(device, action):
             log_event(f"Cancelling live operation for {device} to initiate {action}.")
             cancel_shutter_operation(device)
             update_shutter_status(device, "live")
+            insert_log_event(f"{device} switching to {action} via UI button")
             threading.Thread(target=operate_shutter, args=(device, action), daemon=True).start()
             return jsonify({"message": f"{device} switching to {action} operation initiated."})
 
     update_shutter_status(device, "live")
     log_event(f"Manual operation requested for {device}.")
+    insert_log_event(f"{device} set to {action} via UI button")
     threading.Thread(target=operate_shutter, args=(device, action), daemon=True).start()
     return jsonify({"message": f"{device} set to {action} operation initiated."})
 
