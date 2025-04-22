@@ -5,7 +5,7 @@ auth = Blueprint("auth", __name__, url_prefix="/auth")
 # Plaintext password
 PLAIN_PASSWORD = "harvestking"
 
-# Login HTML form
+# Login HTML template
 login_template = """
 <!DOCTYPE html>
 <html>
@@ -29,23 +29,24 @@ login_template = """
 </html>
 """
 
-# Login route: redirects to /home with ?access=true if correct
+# Login route — redirects to home with ?access=true if correct
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
-            return redirect(url_for("index", access="true"))
+            return redirect(url_for("home", access="true"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
 
-# Only intercept real HTTP requests
+# Apply access control before any request (but safely!)
 @auth.before_app_request
-def require_password_every_time():
+def require_password_per_request():
+    # 🛡 Only do this for real HTTP requests (not GPIO threads)
     if not has_request_context():
-        return  # Don't block sensor/background threads
+        return
 
     allowed_paths = [
         "/auth/login",
@@ -53,12 +54,13 @@ def require_password_every_time():
         "/favicon.ico"
     ]
 
-    path = request.path
-    if any(path.startswith(p) for p in allowed_paths):
+    # Allow static and login pages
+    if any(request.path.startswith(p) for p in allowed_paths):
         return
 
     if request.endpoint == "auth.login":
         return
 
+    # ⛔ If no password token in URL, redirect to login
     if request.args.get("access") != "true":
         return redirect(url_for("auth.login"))
