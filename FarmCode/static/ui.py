@@ -1,8 +1,8 @@
-
 from flask import Flask, render_template, jsonify, url_for
 import random
 import threading
 import sqlite3
+from datetime import datetime, timedelta
 
 from gpio.shutters import operate_shutter, cancel_shutter_operation, operation_intended_actions
 from DbUI.database import update_shutter_status, get_shutter_status
@@ -18,19 +18,39 @@ def get_temperature() -> float:
 
 @app.route("/")
 def index():
-    # Fetch status from DB so the page shows it immediately
+    # Fetch shutter status
     slug_shutter_status = get_shutter_status("Slug Shutter")
     slug_sidewall_status = get_shutter_status("Slug Sidewall")
+
+    # Fetch logs from DB and filter last 24 hours
+    recent_logs = []
+    try:
+        with sqlite3.connect(DB_FILE) as conn:
+            c = conn.cursor()
+            c.execute("SELECT timestamp, event FROM logs ORDER BY timestamp DESC")
+            all_logs = c.fetchall()
+
+            now = datetime.now()
+            for ts_str, event in all_logs:
+                try:
+                    log_time = datetime.strptime(ts_str, "%Y-%m-%d %I:%M %p")
+                    if now - log_time <= timedelta(hours=24):
+                        recent_logs.append((ts_str, event))
+                except Exception as e:
+                    log_event(f"Invalid timestamp in log: {ts_str} - {e}")
+    except Exception as e:
+        log_event(f"Error fetching logs for home page: {e}")
+
     return render_template(
         "index.html",
         temperature=get_temperature(),
         slug_shutter_status=slug_shutter_status,
-        slug_sidewall_status=slug_sidewall_status
+        slug_sidewall_status=slug_sidewall_status,
+        recent_logs=recent_logs
     )
 
 @app.route("/temperature")
 def temperature():
-    # Optionally add headers to prevent caching
     response = jsonify({"temperature": get_temperature()})
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     return response
@@ -83,7 +103,6 @@ def status(device):
 def active_motor_count():
     return jsonify({"count": gpio.gpio_control.active_motor_count})
 
-# ✅ NEW: Show full shutter log data
 @app.route("/shutter-data")
 def shutter_data():
     try:
