@@ -29,14 +29,12 @@ login_template = """
 </html>
 """
 
-# This route just checks the password, then redirects to home with ?access=true
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
-            # Redirect to the home route with access=true
             return redirect(url_for("index", access="true"))
         else:
             error = "Incorrect password"
@@ -45,7 +43,7 @@ def login():
 @auth.before_app_request
 def always_require_password():
     from flask import request
-    allowed_paths = ["/auth/login", "/static", "/favicon.ico"]
+    allowed_paths = ["/auth/login", "/static", "/favicon.ico", "/"]
     if not any(request.path.startswith(p) for p in allowed_paths):
         if request.endpoint != "auth.login" and request.args.get("access") != "true":
             return redirect(url_for("auth.login"))
