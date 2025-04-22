@@ -1,12 +1,14 @@
 from flask import Blueprint, request, redirect, url_for, render_template_string, session, has_request_context
 from functools import wraps
+from datetime import datetime, timedelta
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
-# Always-required plaintext password
+# Plaintext password
 PLAIN_PASSWORD = "harvestking"
+LOGIN_DURATION = 60  # 60 seconds from login time
 
-# Login template
+# HTML login template
 login_template = """
 <!DOCTYPE html>
 <html>
@@ -30,7 +32,7 @@ login_template = """
 </html>
 """
 
-# Login route
+# Route to log in
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
@@ -38,18 +40,20 @@ def login():
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
             session["logged_in"] = True
+            session["login_time"] = datetime.utcnow().isoformat()
             return redirect(url_for("home"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
 
-# Logout route
+# Route to log out
 @auth.route("/logout")
 def logout():
     session.pop("logged_in", None)
+    session.pop("login_time", None)
     return redirect(url_for("auth.login"))
 
-# Decorator to protect routes
+# Route protection decorator
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -58,13 +62,12 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# Global request filter
+# Expire the session after 60 seconds from login
 @auth.before_app_request
-def always_require_password():
+def enforce_session_expiration():
     if not has_request_context():
-        return  # avoid interfering with background threads (like GPIO/sensors)
+        return  # Skip for GPIO or background threads
 
-    # Allow static, login, favicon, and logout routes
     allowed_paths = [
         "/auth/login",
         "/auth/logout",
@@ -74,6 +77,21 @@ def always_require_password():
     if any(request.path.startswith(p) for p in allowed_paths):
         return
 
-    # If not logged in, redirect
+    # If not logged in, redirect to login
     if not session.get("logged_in"):
         return redirect(url_for("auth.login"))
+
+    # Check if 60 seconds have passed since login
+    login_time = session.get("login_time")
+    if login_time:
+        try:
+            login_dt = datetime.fromisoformat(login_time)
+            if datetime.utcnow() - login_dt > timedelta(seconds=LOGIN_DURATION):
+                session.pop("logged_in", None)
+                session.pop("login_time", None)
+                return redirect(url_for("auth.login"))
+        except Exception as e:
+            print(f"[AUTH] Error checking login_time: {e}")
+            session.pop("logged_in", None)
+            session.pop("login_time", None)
+            return redirect(url_for("auth.login"))
