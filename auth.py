@@ -1,12 +1,11 @@
-from flask import Blueprint, request, redirect, url_for, render_template_string, session, has_request_context
-from functools import wraps
+from flask import Blueprint, request, redirect, url_for, render_template_string, has_request_context
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
-# Always-required plaintext password
+# Plaintext password
 PLAIN_PASSWORD = "harvestking"
 
-# Login template
+# Login HTML form
 login_template = """
 <!DOCTYPE html>
 <html>
@@ -30,50 +29,36 @@ login_template = """
 </html>
 """
 
-# Login route
+# Login route: redirects to /home with ?access=true if correct
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
-            session["logged_in"] = True
-            return redirect(url_for("index"))
+            return redirect(url_for("index", access="true"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
 
-# Logout route
-@auth.route("/logout")
-def logout():
-    session.pop("logged_in", None)
-    return redirect(url_for("auth.login"))
-
-# Decorator to protect routes
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not session.get("logged_in"):
-            return redirect(url_for("auth.login"))
-        return f(*args, **kwargs)
-    return decorated_function
-
-# Global request filter
+# Only intercept real HTTP requests
 @auth.before_app_request
-def always_require_password():
+def require_password_every_time():
     if not has_request_context():
-        return  # avoid interfering with background threads (like GPIO/sensors)
+        return  # Don't block sensor/background threads
 
-    # Allow static, login, favicon, and logout routes
     allowed_paths = [
         "/auth/login",
-        "/auth/logout",
         "/static",
         "/favicon.ico"
     ]
-    if any(request.path.startswith(p) for p in allowed_paths):
+
+    path = request.path
+    if any(path.startswith(p) for p in allowed_paths):
         return
 
-    # If not logged in, redirect
-    if not session.get("logged_in"):
+    if request.endpoint == "auth.login":
+        return
+
+    if request.args.get("access") != "true":
         return redirect(url_for("auth.login"))
