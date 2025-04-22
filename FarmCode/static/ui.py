@@ -12,39 +12,33 @@ from management.config import DB_FILE
 
 app = Flask(__name__)
 
-# ✅ RS485: Read temperature in Fahrenheit from SHT30 Modbus sensor
+# ✅ Read temperature from SHT30 sensor via RS485/Modbus and convert to °F
 def read_temp_sensor() -> float:
     client = ModbusClient(
         method='rtu',
-        port='/dev/ttyUSB0',   # Update if your RS485 port is different
+        port='/dev/ttyUSB0',   # Update if your device path is different
         baudrate=9600,
         timeout=1,
         stopbits=1,
         bytesize=8,
         parity='N'
     )
-
     try:
         client.connect()
-        # Read 2 registers from address 0x00 (verify with your device)
-        result = client.read_input_registers(address=0x00, count=2, unit=1)  # unit=1 = Modbus device ID
+        result = client.read_input_registers(address=0x00, count=2, unit=1)
         if result.isError():
             print("[ERROR] Modbus read failed:", result)
             return 0.0
-
-        raw_temp = result.registers[0]  # Assume temperature in tenths of °C
+        raw_temp = result.registers[0]
         temp_celsius = raw_temp / 10.0
         temp_fahrenheit = (temp_celsius * 9 / 5) + 32
         return round(temp_fahrenheit, 2)
-
     except Exception as e:
         print("[ERROR] Failed to read SHT30 sensor:", e)
         return 0.0
-
     finally:
         client.close()
 
-# Used for both UI display and log messages
 def get_temperature() -> float:
     return read_temp_sensor()
 
@@ -69,7 +63,6 @@ def index():
             c = conn.cursor()
             c.execute("SELECT timestamp, event FROM logs ORDER BY timestamp DESC")
             all_logs = c.fetchall()
-
             now = datetime.now()
             for ts_str, event in all_logs:
                 try:
@@ -106,12 +99,10 @@ def change_status(device, action):
 
     if action == "automatic":
         if current_status == "live":
-            log_event(f"Cancelling live operation for {device} to initiate automatic mode.")
             cancel_shutter_operation(device)
         update_shutter_status(device, "automatic")
         insert_log_event(f"{device} set to automatic mode via UI button")
         insert_log_event(f"Temperature at button press: {get_temperature():.1f} °F")
-        log_event(f"Automatic operation requested for {device}.")
         return jsonify({"message": f"{device} set to automatic mode."})
 
     if current_status == action and current_status != "live":
@@ -122,7 +113,6 @@ def change_status(device, action):
         if current_live_action == action:
             return jsonify({"message": f"{device} is already {action}."})
         else:
-            log_event(f"Cancelling live operation for {device} to initiate {action}.")
             cancel_shutter_operation(device)
             update_shutter_status(device, "live")
             insert_log_event(f"{device} switching to {action} via UI button")
@@ -131,7 +121,6 @@ def change_status(device, action):
             return jsonify({"message": f"{device} switching to {action} operation initiated."})
 
     update_shutter_status(device, "live")
-    log_event(f"Manual operation requested for {device}.")
     insert_log_event(f"{device} set to {action} via UI button")
     insert_log_event(f"Temperature at button press: {get_temperature():.1f} °F")
     threading.Thread(target=operate_shutter, args=(device, action), daemon=True).start()
@@ -139,11 +128,8 @@ def change_status(device, action):
 
 @app.route("/status/<device>")
 def status(device):
-    device = device.strip()
-    current_status = get_shutter_status(device)
-    response = jsonify({"status": current_status})
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    return response
+    current_status = get_shutter_status(device.strip())
+    return jsonify({"status": current_status})
 
 @app.route("/active_motor_count")
 def active_motor_count():
