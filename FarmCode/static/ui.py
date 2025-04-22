@@ -1,8 +1,8 @@
 from flask import Flask, render_template, jsonify, url_for
-import random
 import threading
 import sqlite3
 from datetime import datetime, timedelta
+from pymodbus.client import ModbusSerialClient as ModbusClient
 
 from gpio.shutters import operate_shutter, cancel_shutter_operation, operation_intended_actions
 from DbUI.database import update_shutter_status, get_shutter_status
@@ -12,8 +12,41 @@ from management.config import DB_FILE
 
 app = Flask(__name__)
 
+# ✅ RS485: Read temperature in Fahrenheit from SHT30 Modbus sensor
+def read_temp_sensor() -> float:
+    client = ModbusClient(
+        method='rtu',
+        port='/dev/ttyUSB0',   # Update if your RS485 port is different
+        baudrate=9600,
+        timeout=1,
+        stopbits=1,
+        bytesize=8,
+        parity='N'
+    )
+
+    try:
+        client.connect()
+        # Read 2 registers from address 0x00 (verify with your device)
+        result = client.read_input_registers(address=0x00, count=2, unit=1)  # unit=1 = Modbus device ID
+        if result.isError():
+            print("[ERROR] Modbus read failed:", result)
+            return 0.0
+
+        raw_temp = result.registers[0]  # Assume temperature in tenths of °C
+        temp_celsius = raw_temp / 10.0
+        temp_fahrenheit = (temp_celsius * 9 / 5) + 32
+        return round(temp_fahrenheit, 2)
+
+    except Exception as e:
+        print("[ERROR] Failed to read SHT30 sensor:", e)
+        return 0.0
+
+    finally:
+        client.close()
+
+# Used for both UI display and log messages
 def get_temperature() -> float:
-    return round(random.uniform(60, 85), 2)
+    return read_temp_sensor()
 
 def insert_log_event(event: str):
     timestamp = datetime.now().strftime("%Y-%m-%d %I:%M %p")
@@ -77,6 +110,7 @@ def change_status(device, action):
             cancel_shutter_operation(device)
         update_shutter_status(device, "automatic")
         insert_log_event(f"{device} set to automatic mode via UI button")
+        insert_log_event(f"Temperature at button press: {get_temperature():.1f} °F")
         log_event(f"Automatic operation requested for {device}.")
         return jsonify({"message": f"{device} set to automatic mode."})
 
@@ -92,12 +126,14 @@ def change_status(device, action):
             cancel_shutter_operation(device)
             update_shutter_status(device, "live")
             insert_log_event(f"{device} switching to {action} via UI button")
+            insert_log_event(f"Temperature at button press: {get_temperature():.1f} °F")
             threading.Thread(target=operate_shutter, args=(device, action), daemon=True).start()
             return jsonify({"message": f"{device} switching to {action} operation initiated."})
 
     update_shutter_status(device, "live")
     log_event(f"Manual operation requested for {device}.")
     insert_log_event(f"{device} set to {action} via UI button")
+    insert_log_event(f"Temperature at button press: {get_temperature():.1f} °F")
     threading.Thread(target=operate_shutter, args=(device, action), daemon=True).start()
     return jsonify({"message": f"{device} set to {action} operation initiated."})
 
