@@ -1,11 +1,9 @@
-from flask import Flask, redirect, request, url_for, render_template_string, Blueprint
+from flask import Blueprint, request, redirect, url_for, render_template_string, session, has_request_context
+from functools import wraps
 
-app = Flask(__name__)
-
-# --- Blueprint setup ---
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
-# Password required to access app
+# Always-required plaintext password
 PLAIN_PASSWORD = "harvestking"
 
 # Login template
@@ -32,47 +30,50 @@ login_template = """
 </html>
 """
 
-# --- Login Route ---
+# Login route
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
-            return redirect(url_for("home", access="true"))
+            session["logged_in"] = True
+            return redirect(url_for("home"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
 
-# --- Access control for all pages ---
+# Logout route
+@auth.route("/logout")
+def logout():
+    session.pop("logged_in", None)
+    return redirect(url_for("auth.login"))
+
+# Decorator to protect routes
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect(url_for("auth.login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Global request filter
 @auth.before_app_request
 def always_require_password():
-    path = request.path
+    if not has_request_context():
+        return  # avoid interfering with background threads (like GPIO/sensors)
+
+    # Allow static, login, favicon, and logout routes
     allowed_paths = [
         "/auth/login",
+        "/auth/logout",
         "/static",
         "/favicon.ico"
     ]
-    if any(path.startswith(p) for p in allowed_paths):
+    if any(request.path.startswith(p) for p in allowed_paths):
         return
-    if request.endpoint == "auth.login":
-        return
-    if request.args.get("access") != "true":
+
+    # If not logged in, redirect
+    if not session.get("logged_in"):
         return redirect(url_for("auth.login"))
-
-# Register the blueprint
-app.register_blueprint(auth)
-
-# --- Example Protected Route ---
-@app.route("/home")
-def home():
-    return "<h1>Welcome to the Shutter Control System</h1>"
-
-# --- Optional UI root redirect ---
-@app.route("/")
-def index():
-    return redirect(url_for("home", access="true"))
-
-# Run the app
-if __name__ == "__main__":
-    app.run(debug=True)
