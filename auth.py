@@ -1,4 +1,5 @@
-from flask import Blueprint, request, redirect, url_for, render_template_string, has_request_context
+from flask import Blueprint, request, redirect, url_for, render_template_string, session, has_request_context
+from functools import wraps
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -29,32 +30,50 @@ login_template = """
 </html>
 """
 
-# Login route — requires password every time
+# Login route
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form.get("password")
         if password == PLAIN_PASSWORD:
-            # Redirect to home with access=true in URL
-            return redirect(url_for("index", access="true"))
+            session["logged_in"] = True
+            return redirect(url_for("index"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
 
-# Require password on every route
+# Logout route
+@auth.route("/logout")
+def logout():
+    session.pop("logged_in", None)
+    return redirect(url_for("auth.login"))
+
+# Decorator to protect routes
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect(url_for("auth.login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Global request filter
 @auth.before_app_request
 def always_require_password():
     if not has_request_context():
-        return
+        return  # avoid interfering with background threads (like GPIO/sensors)
 
+    # Allow static, login, favicon, and logout routes
     allowed_paths = [
         "/auth/login",
+        "/auth/logout",
         "/static",
         "/favicon.ico"
     ]
     if any(request.path.startswith(p) for p in allowed_paths):
         return
 
-    if request.endpoint != "auth.login" and request.args.get("access") != "true":
+    # If not logged in, redirect
+    if not session.get("logged_in"):
         return redirect(url_for("auth.login"))
