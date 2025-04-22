@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, url_for
+from flask import Flask, render_template, jsonify
 import threading
 import sqlite3
 from datetime import datetime, timedelta
@@ -12,36 +12,40 @@ from management.config import DB_FILE
 
 app = Flask(__name__)
 
-# ✅ Read temperature from SHT30 sensor via RS485/Modbus and convert to °F
-def read_temp_sensor() -> float:
-    client = ModbusClient(
-        method='rtu',
-        port='/dev/ttyUSB0',   # Update if your device path is different
-        baudrate=9600,
-        timeout=1,
-        stopbits=1,
-        bytesize=8,
-        parity='N'
-    )
+# ✅ Read from the RS485 SHT30 sensor and return temperature in °F
+def get_temperature() -> float:
     try:
+        client = ModbusClient(
+            method='rtu',
+            port='/dev/ttyUSB0',   # Update if needed
+            baudrate=9600,
+            timeout=1,
+            stopbits=1,
+            bytesize=8,
+            parity='N'
+        )
         client.connect()
         result = client.read_input_registers(address=0x00, count=2, unit=1)
         if result.isError():
             print("[ERROR] Modbus read failed:", result)
             return 0.0
+
         raw_temp = result.registers[0]
-        temp_celsius = raw_temp / 10.0
-        temp_fahrenheit = (temp_celsius * 9 / 5) + 32
-        return round(temp_fahrenheit, 2)
+        temp_c = raw_temp / 10.0
+        temp_f = (temp_c * 9 / 5) + 32
+        return round(temp_f, 2)
+
     except Exception as e:
-        print("[ERROR] Failed to read SHT30 sensor:", e)
+        print(f"[ERROR] Failed to read SHT30 sensor: {e}")
         return 0.0
+
     finally:
-        client.close()
+        try:
+            client.close()
+        except:
+            pass
 
-def get_temperature() -> float:
-    return read_temp_sensor()
-
+# Log any event with a timestamp
 def insert_log_event(event: str):
     timestamp = datetime.now().strftime("%Y-%m-%d %I:%M %p")
     try:
@@ -63,6 +67,7 @@ def index():
             c = conn.cursor()
             c.execute("SELECT timestamp, event FROM logs ORDER BY timestamp DESC")
             all_logs = c.fetchall()
+
             now = datetime.now()
             for ts_str, event in all_logs:
                 try:
