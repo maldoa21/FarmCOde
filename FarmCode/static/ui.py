@@ -27,16 +27,17 @@ def get_temperature() -> float:
         client.connect()
         result = client.read_input_registers(address=0x00, count=2, unit=1)
         if result.isError():
-            print("[ERROR] Modbus read failed:", result)
+            log_event("[ERROR] Modbus read failed.")
             return 0.0
 
         raw_temp = result.registers[0]
         temp_c = raw_temp / 10.0
         temp_f = (temp_c * 9 / 5) + 32
+        log_event(f"Temperature read from sensor: {temp_f:.2f} °F")  # Log temperature to command prompt
         return round(temp_f, 2)
 
     except Exception as e:
-        print(f"[ERROR] Failed to read SHT30 sensor: {e}")
+        log_event(f"[ERROR] Failed to read SHT30 sensor: {e}")
         return 0.0
 
     finally:
@@ -79,9 +80,10 @@ def index():
     except Exception as e:
         log_event(f"Error fetching logs for home page: {e}")
 
+    temperature = get_temperature()  # Get the temperature from the sensor
     return render_template(
         "index.html",
-        temperature=get_temperature(),
+        temperature=temperature,
         slug_shutter_status=slug_shutter_status,
         slug_sidewall_status=slug_sidewall_status,
         recent_logs=recent_logs
@@ -89,7 +91,9 @@ def index():
 
 @app.route("/temperature")
 def temperature():
-    response = jsonify({"temperature": get_temperature()})
+    temp = get_temperature()  # Get the temperature from the sensor
+    log_event(f"Temperature endpoint accessed: {temp:.2f} °F")  # Log the temperature
+    response = jsonify({"temperature": temp})
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     return response
 
