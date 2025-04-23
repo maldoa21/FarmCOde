@@ -65,38 +65,7 @@
   <p><a href="/shutter-data">🔎 View Full Shutter Log</a></p>
 
   <script>
-    let motorPollInterval = null;
-
-    const startMotorStatusPolling = () => {
-      if (motorPollInterval) return;
-      motorPollInterval = setInterval(() => {
-        updateStatuses();
-        fetch('/active_motor_count?ts=' + new Date().getTime(), { cache: 'no-store' })
-          .then(res => res.json())
-          .then(data => {
-            if (data.count <= 0) {
-              clearInterval(motorPollInterval);
-              motorPollInterval = null;
-            }
-          })
-          .catch(error => console.error("Error fetching motor count:", error));
-      }, 100);
-    };
-
-    const updateStatuses = () => {
-      const devices = ['Slug Shutter', 'Slug Sidewall'];
-      devices.forEach(device => {
-        fetch(`/status/${encodeURIComponent(device)}?t=${new Date().getTime()}`, { cache: 'no-store' })
-          .then(res => res.json())
-          .then(data => {
-            const id = `status-${device.replace(/ /g, '_')}`;
-            const cell = document.getElementById(id);
-            if (cell) cell.innerText = data.status;
-          })
-          .catch(error => console.error(`Polling error for ${device}:`, error));
-      });
-    };
-
+    // Function to update the temperature dynamically
     const updateTemperature = () => {
       fetch('/temperature?ts=' + new Date().getTime(), { cache: 'no-store' })
         .then(res => res.json())
@@ -105,7 +74,10 @@
         })
         .catch(console.error);
     };
+
+    // Call updateTemperature every 10 seconds
     setInterval(updateTemperature, 10000);
+    updateTemperature(); // Call it once on page load
 
     const changeStatus = (device, action) => {
       fetch(`/change_status/${encodeURIComponent(device)}/${encodeURIComponent(action)}`, {
@@ -114,7 +86,7 @@
       })
       .then(res => res.json())
       .then(data => {
-        startMotorStatusPolling();
+        console.log(data.message);
       })
       .catch(error => {
         console.error(`Error changing status:`, error);
