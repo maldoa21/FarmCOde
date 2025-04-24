@@ -2,8 +2,7 @@ from flask import Flask, render_template, jsonify
 import threading
 import sqlite3
 from datetime import datetime, timedelta
-from pymodbus.client import ModbusSerialClient as ModbusClient
-
+from gpio.sensors import monitor_sensors, read_sensor_data  # Import sensor functions
 from gpio.shutters import operate_shutter, cancel_shutter_operation, operation_intended_actions
 from DbUI.database import update_shutter_status, get_shutter_status
 from management.logger import log_event
@@ -12,39 +11,20 @@ from management.config import DB_FILE
 
 app = Flask(__name__)
 
-# ✅ Read from the RS485 SHT30 sensor and return temperature in °F
+# ✅ Fetch temperature from sensors.py
 def get_temperature() -> float:
+    """Fetch the latest temperature from the sensor."""
     try:
-        client = ModbusClient(
-            method='rtu',
-            port='/dev/ttyUSB0',   # Update if needed
-            baudrate=9600,
-            timeout=1,
-            stopbits=1,
-            bytesize=8,
-            parity='N'
-        )
-        client.connect()
-        result = client.read_input_registers(address=0x00, count=2, unit=1)
-        if result.isError():
-            log_event("[ERROR] Modbus read failed.")
+        data = read_sensor_data()  # Use the function from sensors.py
+        if "error" in data:
+            log_event(f"[ERROR] Failed to fetch temperature: {data['error']}")
             return 0.0
-
-        raw_temp = result.registers[0]
-        temp_c = raw_temp / 10.0
-        temp_f = (temp_c * 9 / 5) + 32
-        log_event(f"Temperature read from sensor: {temp_f:.2f} °F")  # Log temperature to command prompt
-        return round(temp_f, 2)
-
+        temperature = data["temperature"]
+        log_event(f"Temperature fetched from sensor: {temperature:.2f} °F")
+        return round(temperature, 2)
     except Exception as e:
-        log_event(f"[ERROR] Failed to read SHT30 sensor: {e}")
+        log_event(f"[ERROR] Exception in get_temperature: {e}")
         return 0.0
-
-    finally:
-        try:
-            client.close()
-        except:
-            pass
 
 # Log any event with a timestamp
 def insert_log_event(event: str):
