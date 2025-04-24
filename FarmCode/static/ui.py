@@ -39,7 +39,7 @@ def get_temperature() -> float:
     except Exception as e:
         log_event(f"[ERROR] Failed to read SHT30 sensor: {e}")
         return 0.0
-#blah blah
+
     finally:
         try:
             client.close()
