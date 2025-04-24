@@ -41,7 +41,7 @@ def login():
         if password == PLAIN_PASSWORD:
             session["logged_in"] = True
             session["login_time"] = datetime.utcnow().isoformat()
-            return redirect(url_for("home"))
+            return redirect(url_for("index"))
         else:
             error = "Incorrect password"
     return render_template_string(login_template, error=error)
